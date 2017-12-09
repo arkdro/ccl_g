@@ -16,3 +16,12 @@
 
 	ccl_g --indir some_input_dir
 
+## Requests
+
+	A request contains an input data and an expected data.
+
+	The input data contains width, height, color range and a 2d array of integers.
+
+	The expected data is the list of 2d arrays, one array for each color in the color range.
+	Every 2d array contains positive integers as labels and negative integers as
+	a background.
