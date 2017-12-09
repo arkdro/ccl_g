@@ -3,8 +3,8 @@
 ## Parameters
 
 	--infile - input file. Mutually exclusive with --indir
-    --indir - input dir. Mutually exclusive with --infile
-    --remove - remove input file after successful processing
+	--indir - input dir. Mutually exclusive with --infile
+	--remove - remove input file after successful processing
 
 ## Run
 
