@@ -3,7 +3,7 @@ package ccl
 func Ccl(width int, height int, color_range int, data [][]int) {
 }
 
-func ccl_one_color(width int, height int, color int, data [][]int) {
+func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
 	labels := create_empty_labels(width, height)
 	dummy := make([]int, width)
 	dummy_labels := make([]int, width)
@@ -34,6 +34,7 @@ func ccl_one_color(width int, height int, color int, data [][]int) {
 			}
 		}
 	}
+	return labels
 }
 
 func has_unmarked_background_below(color int, x int, y int, data *[][]int, labels *[][]int) bool {
