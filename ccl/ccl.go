@@ -17,7 +17,8 @@ func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
 				has_background_above(color, x, y, &data, &dummy) {
 				// step 1: external contour of a new component
 				labels[y][x] = label
-				contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+				external_contour_tracing(color, x, y, label, &data, &dummy,
+					&labels, &dummy_labels)
 				label++
 			} else if has_unmarked_background_below(color, x, y, &data, &labels) {
 				// step 2: newly encountered internal contour
@@ -27,7 +28,8 @@ func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
 					// left neighbor must be labeled
 					copy_left_label(x, y, &labels)
 				}
-				contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+				internal_contour_tracing(color, x, y, label, &data, &dummy,
+					&labels, &dummy_labels)
 			} else {
 				// step 3: left neighbor must be a labeled pixel
 				copy_left_label(x, y, &labels)
@@ -100,6 +102,16 @@ func create_empty_labels(width int, height int) [][]int {
 	return labels
 }
 
-func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int) {
+func external_contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int) {
+	pos := 7
+	contour_tracing(color, x, y, label, data, dummy, labels, dummy_labels, pos)
+}
+
+func internal_contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int) {
+	pos := 3
+	contour_tracing(color, x, y, label, data, dummy, labels, dummy_labels, pos)
+}
+
+func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
 }
 
