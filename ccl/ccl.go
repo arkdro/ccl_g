@@ -113,5 +113,23 @@ func internal_contour_tracing(color int, x int, y int, label int, data *[][]int,
 }
 
 func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
+	new_x, new_y, pos, found := tracer(color, x, y, label, data, dummy, labels, dummy_labels, init_pos)
+	if ! found {
+		return
+	}
+}
+
+func tracer(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) (int, int, int, bool) {
+	pos := init_pos
+	for ; pos != init_pos; {
+		x2, y2 := get_neighbour_coord(x, y, data, pos)
+		color2 := get_color(x2, y2, data)
+		if same_colors(color, color2) {
+			return x2, y2, pos, true
+		}
+		mark_background_point(x2, y2, data, dummy)
+		pos = next_pos(pos)
+	}
+	return 0, 0, 0, false
 }
 
