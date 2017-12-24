@@ -1,5 +1,9 @@
 package ccl
 
+import (
+	"github.com/asdf/ccl_g/point"
+)
+
 func Ccl(width int, height int, color_range int, data [][]int) {
 }
 
@@ -113,9 +117,10 @@ func internal_contour_tracing(color int, x int, y int, label int, data *[][]int,
 }
 
 func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
-	new_x, new_y, pos, found := tracer(color, x, y, label, data, dummy, labels, dummy_labels, init_pos)
-	if ! found {
-		return
+	prev_point := point.Point{x, y}
+		new_point, pos, found := tracer(color, prev_point, label, data, dummy, labels, dummy_labels, init_pos)
+		if ! found {
+			return
 	}
 }
 
