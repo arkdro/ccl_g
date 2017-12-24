@@ -117,6 +117,11 @@ func internal_contour_tracing(color int, x int, y int, label int, data *[][]int,
 }
 
 func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
+	initial_pair_filled := false
+	initial_pair := [2]point.Point{
+		{x, y},
+		{},
+	}
 	prev_point := point.Point{x, y}
 		new_point, pos, found := tracer(color, prev_point, label, data, dummy, labels, dummy_labels, init_pos)
 		if ! found {
