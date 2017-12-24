@@ -136,8 +136,6 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 			update_initial_pair(&initial_pair, new_point)
 			initial_pair_filled = true
 		}
-		
-
 		prev_point = new_point
 	}
 }
