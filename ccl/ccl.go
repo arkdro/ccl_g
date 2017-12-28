@@ -160,5 +160,6 @@ func update_initial_pair(initial_pair *[]point.Point, new_point point.Point) {
 }
 
 func contour_finished(initial_pair *[]point.Point, new_point point.Point, prev_point point.Point) bool {
-	return true
+	return (*initial_pair)[0] == prev_point &&
+		(*initial_pair)[1] == new_point
 }
