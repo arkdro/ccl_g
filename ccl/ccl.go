@@ -118,7 +118,7 @@ func internal_contour_tracing(color int, x int, y int, label int, data *[][]int,
 
 func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
 	initial_pair_filled := false
-	initial_pair := [2]point.Point{
+	initial_pair := []point.Point{
 		{x, y},
 		{},
 	}
@@ -130,7 +130,7 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 			return
 		}
 		if initial_pair_filled {
-			if contour_finished(initial_pair, new_point, prev_point) {
+			if contour_finished(&initial_pair, new_point, prev_point) {
 				return
 			}
 		} else {
@@ -155,3 +155,7 @@ func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, l
 	return point.Point{}, 0, false
 }
 
+
+func contour_finished(initial_pair *[]point.Point, new_point point.Point, prev_point point.Point) bool {
+	return true
+}
