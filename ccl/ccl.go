@@ -129,10 +129,11 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 			// an isolated point
 			return
 		}
-		if contour_finished(initial_pair, new_point, prev_point) {
-			return
-		}
-		if ! initial_pair_filled {
+		if initial_pair_filled {
+			if contour_finished(initial_pair, new_point, prev_point) {
+				return
+			}
+		} else {
 			update_initial_pair(&initial_pair, new_point)
 			initial_pair_filled = true
 		}
