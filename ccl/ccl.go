@@ -145,7 +145,7 @@ func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, l
 	pos := init_pos
 	for ; pos != init_pos; {
 		point2 := get_neighbour_coord(pt, data, pos)
-		color2 := get_color(point2, data)
+		color2 := get_color(point2, data, color)
 		if same_colors(color, color2) {
 			return point.Point{x2, y2}, pos, true
 		}
@@ -163,3 +163,12 @@ func contour_finished(initial_pair *[]point.Point, new_point point.Point, prev_p
 	return (*initial_pair)[0] == prev_point &&
 		(*initial_pair)[1] == new_point
 }
+
+func get_color(pt point.Point, data *[][]int, orig_color int) int {
+	if pt.Y < 0 {
+		return orig_color - 1
+	} else {
+		return (*data)[pt.Y][pt.X]
+	}
+}
+
