@@ -172,3 +172,7 @@ func get_color(pt point.Point, data *[][]int, orig_color int) int {
 	}
 }
 
+func same_colors(color1 int, color2 int) bool {
+	return color1 == color2
+}
+
