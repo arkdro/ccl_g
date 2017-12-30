@@ -219,3 +219,26 @@ func pos_to_delta(pos int) (int, int) {
 	}
 	return dx, dy
 }
+func prev_point_pos(pos int) int {
+	var prev_pos int
+	switch pos {
+	case 0:
+		prev_pos = 4
+	case 1:
+		prev_pos = 5
+	case 2:
+		prev_pos = 6
+	case 3:
+		prev_pos = 7
+	case 4:
+		prev_pos = 0
+	case 5:
+		prev_pos = 1
+	case 6:
+		prev_pos = 2
+	case 7:
+		prev_pos = 3
+	}
+	return prev_pos
+}
+
