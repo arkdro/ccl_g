@@ -149,7 +149,7 @@ func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, l
 		if same_colors(color, color2) {
 			return point2, pos, true
 		}
-		mark_background_point(x2, y2, data, dummy)
+		mark_background_point(point2, data, dummy)
 		pos = next_pos(pos)
 	}
 	return point.Point{}, 0, false
@@ -174,5 +174,13 @@ func get_color(pt point.Point, data *[][]int, orig_color int) int {
 
 func same_colors(color1 int, color2 int) bool {
 	return color1 == color2
+}
+
+func mark_background_point(pt point.Point, data *[][]int, dummy *[]int) {
+	if pt.Y < 0 {
+		(*dummy)[pt.X] = -1
+	} else {
+		(*data)[pt.Y][pt.X] = -1
+	}
 }
 
