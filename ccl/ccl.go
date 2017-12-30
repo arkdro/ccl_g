@@ -219,6 +219,13 @@ func pos_to_delta(pos int) (int, int) {
 	}
 	return dx, dy
 }
+
+func calc_next_pos(pos int) int {
+	prev_pos := prev_point_pos(pos)
+	next_pos := (prev_pos + 2) % connectivity
+	return next_pos
+}
+
 func prev_point_pos(pos int) int {
 	var prev_pos int
 	switch pos {
