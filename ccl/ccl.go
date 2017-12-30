@@ -147,7 +147,7 @@ func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, l
 		point2 := get_neighbour_coord(pt, data, pos)
 		color2 := get_color(point2, data, color)
 		if same_colors(color, color2) {
-			return point.Point{x2, y2}, pos, true
+			return point2, pos, true
 		}
 		mark_background_point(x2, y2, data, dummy)
 		pos = next_pos(pos)
