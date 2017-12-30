@@ -125,8 +125,9 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 		{},
 	}
 	prev_point := point.Point{x, y}
+	pos := init_pos
 	for {
-		new_point, pos, found := tracer(color, prev_point, label, data, dummy, labels, dummy_labels, init_pos)
+		new_point, new_pos, found := tracer(color, prev_point, label, data, dummy, labels, dummy_labels, pos)
 		if ! found {
 			// an isolated point
 			return
@@ -140,6 +141,7 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 			initial_pair_filled = true
 		}
 		prev_point = new_point
+		pos = calc_next_pos(new_pos)
 	}
 }
 
