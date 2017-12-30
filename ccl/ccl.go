@@ -191,3 +191,25 @@ func next_pos(pos int) int {
 	return new_pos
 }
 
+func pos_to_delta(pos int) (int, int) {
+	var dx, dy int
+	switch pos {
+	case 0:
+		dx, dy = 1, 0
+	case 1:
+		dx, dy = 1, 1
+	case 2:
+		dx, dy = 0, 1
+	case 3:
+		dx, dy = -1, 1
+	case 4:
+		dx, dy = -1, 0
+	case 5:
+		dx, dy = -1, -1
+	case 6:
+		dx, dy = 0, -1
+	case 7:
+		dx, dy = 1, -1
+	}
+	return dx, dy
+}
