@@ -4,6 +4,8 @@ import (
 	"github.com/asdf/ccl_g/point"
 )
 
+const connectivity = 8
+
 func Ccl(width int, height int, color_range int, data [][]int) {
 }
 
@@ -182,5 +184,10 @@ func mark_background_point(pt point.Point, data *[][]int, dummy *[]int) {
 	} else {
 		(*data)[pt.Y][pt.X] = -1
 	}
+}
+
+func next_pos(pos int) int {
+	new_pos := (pos + 1) % connectivity
+	return new_pos
 }
 
