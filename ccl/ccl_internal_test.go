@@ -124,3 +124,35 @@ func Test_has_background_above3(t *testing.T) {
 	}
 }
 
+func Test_is_background1(t *testing.T) {
+	color := 1
+	x := 1
+	y := 0
+	data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	actual := is_background(color, x, y, &data)
+	expected := true
+	if actual != expected {
+		t.Error("is_background 1 mismatch")
+	}
+}
+
+func Test_is_background2(t *testing.T) {
+	color := 1
+	x := 1
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	actual := is_background(color, x, y, &data)
+	expected := false
+	if actual != expected {
+		t.Error("is_background 2 mismatch")
+	}
+}
+
