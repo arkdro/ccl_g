@@ -16,24 +16,24 @@ func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 	return labels
 }
 
-func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
+func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
 	dummy := make([]int, width)
 	dummy_labels := make([]int, width)
 	label := 1
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
-			if is_background(color, x, y, &data) {
+			if is_background(color, x, y, data) {
 				continue
 			}
 			if has_no_label(x, y, &labels) &&
-				has_background_above(color, x, y, &data, &dummy) {
+				has_background_above(color, x, y, data, &dummy) {
 				// step 1: external contour of a new component
 				labels[y][x] = label
-				external_contour_tracing(color, x, y, label, &data, &dummy,
+				external_contour_tracing(color, x, y, label, data, &dummy,
 					&labels, &dummy_labels)
 				label++
-			} else if has_unmarked_background_below(color, x, y, &data, &labels) {
+			} else if has_unmarked_background_below(color, x, y, data, &labels) {
 				// step 2: newly encountered internal contour
 				if has_label(x, y, &labels) {
 					// part of an external contour. Already labeled
@@ -41,7 +41,7 @@ func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
 					// left neighbor must be labeled
 					copy_left_label(x, y, &labels)
 				}
-				internal_contour_tracing(color, x, y, label, &data, &dummy,
+				internal_contour_tracing(color, x, y, label, data, &dummy,
 					&labels, &dummy_labels)
 			} else {
 				// step 3: left neighbor must be a labeled pixel
@@ -49,7 +49,7 @@ func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
 			}
 		}
 	}
-	return labels
+	return &labels
 }
 
 func has_unmarked_background_below(color int, x int, y int, data *[][]int, labels *[][]int) bool {
