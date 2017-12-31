@@ -363,3 +363,45 @@ func Test_same_colors2(t *testing.T) {
 	}
 }
 
+func Test_mark_background_point1(t *testing.T) {
+	pt := point.Point{X: 1, Y: 0}
+	data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	dummy := make([]int, 3)
+	expected_data := [][]int{
+		{1, -1, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	expected_dummy := make([]int, 3)
+	mark_background_point(pt, &data, &dummy)
+	if !reflect.DeepEqual(data, expected_data) ||
+		!reflect.DeepEqual(dummy, expected_dummy) {
+		t.Error("mark_background_point 1 mismatch")
+	}
+}
+
+func Test_mark_background_point2(t *testing.T) {
+	pt := point.Point{X: 1, Y: -1}
+	data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	dummy := make([]int, 3)
+	expected_data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	expected_dummy := []int{0, -1, 0}
+	mark_background_point(pt, &data, &dummy)
+	if !reflect.DeepEqual(data, expected_data) ||
+		!reflect.DeepEqual(dummy, expected_dummy) {
+		t.Error("mark_background_point 2 mismatch")
+	}
+}
+
