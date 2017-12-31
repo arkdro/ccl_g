@@ -4,6 +4,6 @@ all:
 	go build
 
 test:
-	go test ./...
+	go test -cover ./...
 
 default: all
