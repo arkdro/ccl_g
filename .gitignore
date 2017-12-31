@@ -7,4 +7,5 @@ TAGS
 f*.json
 f*.json-result
 
+coverage.out
 coverage.html
