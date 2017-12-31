@@ -343,3 +343,23 @@ func Test_get_color2(t *testing.T) {
 	}
 }
 
+func Test_same_colors1(t *testing.T) {
+	color1 := 4
+	color2 := 4
+	actual := same_colors(color1, color2)
+	expected := true
+	if actual != expected {
+		t.Error("same_colors 1 mismatch")
+	}
+}
+
+func Test_same_colors2(t *testing.T) {
+	color1 := 4
+	color2 := 2
+	actual := same_colors(color1, color2)
+	expected := false
+	if actual != expected {
+		t.Error("same_colors 2 mismatch")
+	}
+}
+
