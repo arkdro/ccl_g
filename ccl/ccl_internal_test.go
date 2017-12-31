@@ -253,3 +253,17 @@ func Test_copy_left_label(t *testing.T) {
 	}
 }
 
+func Test_create_empty_labels(t *testing.T) {
+	width := 2
+	height := 3
+	expected := [][]int{
+		{0, 0},
+		{0, 0},
+		{0, 0},
+	}
+	actual := create_empty_labels(width, height)
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("create_empty_labels mismatch")
+	}
+}
+
