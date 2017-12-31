@@ -445,3 +445,27 @@ func Test_pos_to_delta(t *testing.T) {
 	}
 }
 
+func Test_get_neighbour_coord(t *testing.T) {
+	actual := make([]point.Point, connectivity)
+	for i := 0; i < connectivity; i++ {
+		pt := point.Point{
+			X: i * 3 - 1,
+			Y: i * 5 + 1}
+		point2 := get_neighbour_coord(pt, i)
+		actual[i] = point2
+	}
+	expected := []point.Point{
+		{X: 0, Y: 1},
+		{X: 3, Y: 7},
+		{X: 5, Y: 12},
+		{X: 7, Y: 17},
+		{X: 10, Y: 21},
+		{X: 13, Y: 25},
+		{X: 17, Y: 30},
+		{X: 21, Y: 35},
+	}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("get_neighbour_coord mismatch")
+	}
+}
+
