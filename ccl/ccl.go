@@ -72,6 +72,7 @@ func has_background_above(color int, x int, y int, data *[][]int, dummy *[]int) 
 		if (*dummy)[x] != color {
 			return true
 		} else {
+			 // should not happen
 			return false
 		}
 	}

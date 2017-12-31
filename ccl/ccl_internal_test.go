@@ -124,6 +124,23 @@ func Test_has_background_above3(t *testing.T) {
 	}
 }
 
+func Test_has_background_above4(t *testing.T) {
+	color := 1
+	x := 1
+	y := 0
+	data := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	dummy := []int{1, 1, 1} // should not happen
+	actual := has_background_above(color, x, y, &data, &dummy)
+	expected := false
+	if actual != expected {
+		t.Error("has_background_above 4 mismatch")
+	}
+}
+
 func Test_is_background1(t *testing.T) {
 	color := 1
 	x := 1
