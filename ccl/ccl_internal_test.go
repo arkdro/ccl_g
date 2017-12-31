@@ -423,3 +423,25 @@ func Test_next_pos2(t *testing.T) {
 	}
 }
 
+func Test_pos_to_delta(t *testing.T) {
+	actual := make([]int, connectivity * 2)
+	for i := 0; i < connectivity; i++ {
+		dx, dy := pos_to_delta(i)
+		actual[i * 2] = dy
+		actual[i * 2 + 1] = dx
+	}
+	expected := []int{
+		0, 1,
+		1, 1,
+		1, 0,
+		1, -1,
+		0, -1,
+		-1, -1,
+		-1, 0,
+		-1, 1,
+	}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("pos_to_delta mismatch")
+	}
+}
+
