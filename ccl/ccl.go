@@ -258,3 +258,17 @@ func prev_point_pos(pos int) int {
 	return prev_pos
 }
 
+func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
+	data := make([][]int, height)
+	for y := 0; y < height; y++ {
+		row := make([]int, width)
+		data[y] = row
+	}
+	for y := 0; y < height; y++ {
+		for x := 0; x < width; x ++ {
+			data[y][x] = (*orig_data)[y][x]
+		}
+	}
+	return &data
+}
+
