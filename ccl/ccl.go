@@ -63,7 +63,7 @@ func has_unmarked_background_below(color int, x int, y int, data *[][]int, label
 
 func has_background_above(color int, x int, y int, data *[][]int, dummy *[]int) bool {
 	if y > 0 {
-		if (*data)[y][x] != color {
+		if (*data)[y - 1][x] != color {
 			return true
 		} else {
 			return false
