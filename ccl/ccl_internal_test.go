@@ -469,3 +469,15 @@ func Test_get_neighbour_coord(t *testing.T) {
 	}
 }
 
+func Test_prev_point_pos(t *testing.T) {
+	actual := make([]int, connectivity)
+	for i := 0; i < connectivity; i++ {
+		pos := prev_point_pos(i)
+		actual[i] = pos
+	}
+	expected := []int{4, 5, 6, 7, 0, 1, 2, 3}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("prev_point_pos mismatch")
+	}
+}
+
