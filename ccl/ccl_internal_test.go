@@ -481,3 +481,15 @@ func Test_prev_point_pos(t *testing.T) {
 	}
 }
 
+func Test_calc_next_pos(t *testing.T) {
+	actual := make([]int, connectivity)
+	for i := 0; i < connectivity; i++ {
+		pos := calc_next_pos(i)
+		actual[i] = pos
+	}
+	expected := []int{6, 7, 0, 1, 2, 3, 4, 5}
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("calc_next_pos mismatch")
+	}
+}
+
