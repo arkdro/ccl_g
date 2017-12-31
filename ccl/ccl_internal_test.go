@@ -1,6 +1,8 @@
 package ccl
 
 import (
+	"github.com/asdf/ccl_g/point"
+
 	"reflect"
 	"testing"
 )
@@ -264,6 +266,22 @@ func Test_create_empty_labels(t *testing.T) {
 	actual := create_empty_labels(width, height)
 	if !reflect.DeepEqual(actual, expected) {
 		t.Error("create_empty_labels mismatch")
+	}
+}
+
+func Test_update_initial_pair(t *testing.T) {
+	initial_pair := []point.Point{
+		{2, 3},
+		{0, 0},
+	}
+	new_point := point.Point{X: 5, Y: 3}
+	expected := []point.Point{
+		{2, 3},
+		{5, 3},
+	}
+	update_initial_pair(&initial_pair, new_point)
+	if !reflect.DeepEqual(initial_pair, expected) {
+		t.Error("update_initial_pair mismatch")
 	}
 }
 
