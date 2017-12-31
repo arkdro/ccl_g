@@ -6,3 +6,5 @@ TAGS
 
 f*.json
 f*.json-result
+
+coverage.html
