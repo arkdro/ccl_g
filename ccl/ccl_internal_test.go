@@ -1,6 +1,7 @@
 package ccl
 
 import (
+	"reflect"
 	"testing"
 )
 
@@ -230,6 +231,25 @@ func Test_has_label2(t *testing.T) {
 	expected := false
 	if actual != expected {
 		t.Error("has_label 2 mismatch")
+	}
+}
+
+func Test_copy_left_label(t *testing.T) {
+	x := 1
+	y := 2
+	labels := [][]int{
+		{1, 2, 3},
+		{0, 0, 0},
+		{4, 0, 0},
+	}
+	expected := [][]int{
+		{1, 2, 3},
+		{0, 0, 0},
+		{4, 4, 0},
+	}
+	copy_left_label(x, y, &labels)
+	if !reflect.DeepEqual(labels, expected) {
+		t.Error("copy_left_label mismatch")
 	}
 }
 
