@@ -405,3 +405,21 @@ func Test_mark_background_point2(t *testing.T) {
 	}
 }
 
+func Test_next_pos1(t *testing.T) {
+	pos := 4
+	actual := next_pos(pos)
+	expected := 5
+	if actual != expected {
+		t.Error("next_pos 1 mismatch")
+	}
+}
+
+func Test_next_pos2(t *testing.T) {
+	pos := 7
+	actual := next_pos(pos)
+	expected := 0
+	if actual != expected {
+		t.Error("next_pos 2 mismatch")
+	}
+}
+
