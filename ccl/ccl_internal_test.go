@@ -285,3 +285,31 @@ func Test_update_initial_pair(t *testing.T) {
 	}
 }
 
+func Test_contour_finished1(t *testing.T) {
+	initial_pair := []point.Point{
+		{2, 3},
+		{0, 0},
+	}
+	new_point := point.Point{X: 5, Y: 3}
+	prev_point := point.Point{X: 4, Y: 4}
+	expected := false
+	actual := contour_finished(&initial_pair, new_point, prev_point)
+	if actual != expected {
+		t.Error("contour_finished 1 mismatch")
+	}
+}
+
+func Test_contour_finished2(t *testing.T) {
+	initial_pair := []point.Point{
+		{2, 3},
+		{1, 1},
+	}
+	new_point := point.Point{X: 1, Y: 1}
+	prev_point := point.Point{X: 2, Y: 3}
+	expected := true
+	actual := contour_finished(&initial_pair, new_point, prev_point)
+	if actual != expected {
+		t.Error("contour_finished 2 mismatch")
+	}
+}
+
