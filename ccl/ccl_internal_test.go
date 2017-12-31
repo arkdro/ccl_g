@@ -156,3 +156,33 @@ func Test_is_background2(t *testing.T) {
 	}
 }
 
+func Test_has_no_label1(t *testing.T) {
+	x := 1
+	y := 1
+	labels := [][]int{
+		{1, 2, 3},
+		{1, 1, 3},
+		{1, 2, 3},
+	}
+	actual := has_no_label(x, y, &labels)
+	expected := false
+	if actual != expected {
+		t.Error("has_no_label 1 mismatch")
+	}
+}
+
+func Test_has_no_label2(t *testing.T) {
+	x := 1
+	y := 1
+	labels := [][]int{
+		{0, 0, 0},
+		{1, 0, 0},
+		{1, 2, 3},
+	}
+	actual := has_no_label(x, y, &labels)
+	expected := true
+	if actual != expected {
+		t.Error("has_no_label 2 mismatch")
+	}
+}
+
