@@ -313,3 +313,33 @@ func Test_contour_finished2(t *testing.T) {
 	}
 }
 
+func Test_get_color1(t *testing.T) {
+	pt := point.Point{X: 1, Y: 1}
+	color := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 4, 3},
+		{1, 2, 3},
+	}
+	actual := get_color(pt, &data, color)
+	expected := 4
+	if actual != expected {
+		t.Error("get_color 1 mismatch")
+	}
+}
+
+func Test_get_color2(t *testing.T) {
+	pt := point.Point{X: 1, Y: -1}
+	color := 4
+	data := [][]int{
+		{1, 2, 3},
+		{1, 4, 3},
+		{1, 2, 3},
+	}
+	actual := get_color(pt, &data, color)
+	expected := 3
+	if actual != expected {
+		t.Error("get_color 2 mismatch")
+	}
+}
+
