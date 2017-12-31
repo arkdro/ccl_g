@@ -6,7 +6,14 @@ import (
 
 const connectivity = 8
 
-func Ccl(width int, height int, color_range int, data [][]int) {
+func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
+	labels := make([]*[][]int, color_range)
+	for color := 0; color < color_range; color++ {
+		cur_data := prepare_data(width, height, data)
+		cur_labels := ccl_one_color(width, height, color, cur_data)
+		labels[color] = cur_labels
+	}
+	return labels
 }
 
 func ccl_one_color(width int, height int, color int, data [][]int) [][]int {
