@@ -154,8 +154,7 @@ func contour_tracing(color int, x int, y int, label int, data *[][]int, dummy *[
 }
 
 func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) (point.Point, int, bool) {
-	pos := init_pos
-	for ; pos != init_pos; {
+	for pos := init_pos; ; {
 		point2 := get_neighbour_coord(pt, pos)
 		color2 := get_color(point2, data, color)
 		if same_colors(color, color2) {
@@ -163,6 +162,9 @@ func tracer(color int, pt point.Point, label int, data *[][]int, dummy *[]int, l
 		}
 		mark_background_point(point2, data, dummy)
 		pos = next_pos(pos)
+		if pos == init_pos {
+			break
+		}
 	}
 	return point.Point{}, 0, false
 }
