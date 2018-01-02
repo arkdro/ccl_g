@@ -541,3 +541,51 @@ func Test_tracer1(t *testing.T) {
 	}
 }
 
+func Test_tracer2(t *testing.T) {
+	pt := point.Point{X: 1, Y: 1}
+	color := 4
+	label := 1
+	init_pos := 7
+	data := [][]int{
+		{1, 2, 3},
+		{1, 4, 3},
+		{4, 2, 3},
+	}
+	labels := [][]int{
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	}
+	dummy := make([]int, 3)
+	dummy_labels := make([]int, 3)
+	expected_data := [][]int{
+		{1, 2, -1},
+		{1, 4, -1},
+		{4, -1, -1},
+	}
+	expected_dummy := []int{0, 0, 0}
+	expected_labels := [][]int{
+		{0, 0, 0},
+		{0, 0, 0},
+		{0, 0, 0},
+	}
+	expected_dummy_labels := []int{0, 0, 0}
+	expected_point := point.Point{X: 0, Y: 2}
+	point2, pos2, status := tracer(color, pt, label, &data, &dummy, &labels, &dummy_labels, init_pos)
+	if point2 != expected_point {
+		t.Error("tracer 2 point mismatch")
+	} else if pos2 != 3 {
+		t.Error("tracer 2 pos mismatch")
+	} else if status != true {
+		t.Error("tracer 2 status mismatch")
+	} else if !reflect.DeepEqual(data, expected_data) {
+		t.Error("tracer 2 data mismatch")
+	} else if !reflect.DeepEqual(dummy, expected_dummy) {
+		t.Error("tracer 2 dummy mismatch")
+	} else if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("tracer 2 labels mismatch")
+	} else if !reflect.DeepEqual(dummy_labels, expected_dummy_labels) {
+		t.Error("tracer 2 dummy labels mismatch")
+	}
+}
+
