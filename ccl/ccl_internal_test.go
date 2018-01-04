@@ -553,7 +553,7 @@ func Test_tracer2(t *testing.T) {
 	}
 	labels := [][]int{
 		{0, 0, 0},
-		{0, 0, 0},
+		{0, 1, 0},
 		{0, 0, 0},
 	}
 	dummy := make([]int, 3)
@@ -566,8 +566,8 @@ func Test_tracer2(t *testing.T) {
 	expected_dummy := []int{0, 0, 0}
 	expected_labels := [][]int{
 		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
+		{0, 1, 0},
+		{1, 0, 0},
 	}
 	expected_dummy_labels := []int{0, 0, 0}
 	expected_point := point.Point{X: 0, Y: 2}
