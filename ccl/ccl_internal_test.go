@@ -703,3 +703,60 @@ func Test_external_contour_tracing2(t *testing.T) {
 	}
 }
 
+func Test_internal_contour_tracing1(t *testing.T) {
+	x := 2
+	y := 0
+	color := 1
+	label := 3
+	dummy := []int{-1, -1, -1, -1, -1, -1, -1, 0}
+	data := [][]int{
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, 1, 0, 0, 0, 1, 1, -1},
+		{-1, 1, 1, 0, 0, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, -1, -1, -1, -1, -1, -1, 0},
+	}
+	dummy_labels := []int{0, 0, 0, 0, 0, 0, 0, 0}
+	labels := [][]int{
+		{0, 3, 3, 3, 3, 3, 0, 0},
+		{0, 3, 0, 0, 0, 0, 3, 0},
+		{0, 3, 0, 0, 0, 0, 3, 0},
+		{0, 3, 0, 0, 0, 0, 3, 0},
+		{0, 3, 0, 0, 0, 0, 3, 0},
+		{0, 3, 3, 3, 3, 3, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	expected_dummy := []int{-1, -1, -1, -1, -1, -1, -1, 0}
+	expected_data := [][]int{
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, 1, -1, -1, -1, 1, 1, -1},
+		{-1, 1, 1, -1, -1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, -1, -1, -1, -1, -1, -1, 0},
+	}
+	expected_dummy_labels := []int{0, 0, 0, 0, 0, 0, 0, 0}
+	expected_labels := [][]int{
+		{0, 3, 3, 3, 3, 3, 0, 0},
+		{0, 3, 0, 0, 0, 3, 3, 0},
+		{0, 3, 3, 0, 0, 3, 3, 0},
+		{0, 3, 0, 3, 3, 0, 3, 0},
+		{0, 3, 0, 0, 0, 0, 3, 0},
+		{0, 3, 3, 3, 3, 3, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	internal_contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+	if !reflect.DeepEqual(data, expected_data) {
+		t.Error("internal_contour_tracing 1 data mismatch")
+	} else if !reflect.DeepEqual(dummy, expected_dummy) {
+		t.Error("internal_contour_tracing 1 dummy mismatch")
+	} else if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("internal_contour_tracing 1 labels mismatch")
+	} else if !reflect.DeepEqual(dummy_labels, expected_dummy_labels) {
+		t.Error("internal_contour_tracing 1 dummy labels mismatch")
+	}
+}
+
