@@ -17,13 +17,7 @@ func Test_has_unmarked_background_below1(t *testing.T) {
 		{1, 2, 3},
 		{1, 2, 3},
 	}
-	labels := [][]int{
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
-	}
-	actual := has_unmarked_background_below(color, x, y, &data, &labels)
+	actual := has_unmarked_background_below(color, x, y, &data)
 	expected := true
 	if actual != expected {
 		t.Error("has_unmarked_background_below 1 mismatch")
@@ -40,13 +34,7 @@ func Test_has_unmarked_background_below2(t *testing.T) {
 		{1, 2, 3},
 		{1, 1, 3},
 	}
-	labels := [][]int{
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
-	}
-	actual := has_unmarked_background_below(color, x, y, &data, &labels)
+	actual := has_unmarked_background_below(color, x, y, &data)
 	expected := false
 	if actual != expected {
 		t.Error("has_unmarked_background_below 2 mismatch")
@@ -61,15 +49,9 @@ func Test_has_unmarked_background_below3(t *testing.T) {
 		{1, 2, 3},
 		{1, 2, 3},
 		{1, 2, 3},
-		{1, 2, 3},
+		{1, -1, 3},
 	}
-	labels := [][]int{
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 0, 0},
-		{0, 1, 0},
-	}
-	actual := has_unmarked_background_below(color, x, y, &data, &labels)
+	actual := has_unmarked_background_below(color, x, y, &data)
 	expected := false
 	if actual != expected {
 		t.Error("has_unmarked_background_below 3 mismatch")
