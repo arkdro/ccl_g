@@ -838,3 +838,42 @@ func Test_ccl_one_color1(t *testing.T) {
 	}
 }
 
+func Test_ccl_one_color2(t *testing.T) {
+	width := 8
+	height := 7
+	color := 1
+	data := [][]int{
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	expected_data := [][]int{
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, -1, -1, 1, 1, -1},
+		{-1, 1, 1, -1, -1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, 1, -1},
+		{-1, 1, 1, 1, 1, 1, -1, -1},
+		{-1, -1, -1, -1, -1, -1, -1, 0},
+	}
+	expected_labels := [][]int{
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	labels := ccl_one_color(width, height, color, &data)
+	if !reflect.DeepEqual(data, expected_data) {
+		t.Error("ccl_one_color 2 data mismatch")
+	} else if !reflect.DeepEqual(*labels, expected_labels) {
+		t.Error("ccl_one_color 2 labels mismatch")
+	}
+}
+
