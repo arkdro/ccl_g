@@ -46,6 +46,8 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 			} else if has_no_label(x, y, &labels) {
 				// step 3: left neighbor must be a labeled pixel
 				copy_left_label(x, y, &labels)
+			} else {
+				// already has label
 			}
 		}
 	}
