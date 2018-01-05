@@ -33,7 +33,7 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 				external_contour_tracing(color, x, y, label, data, &dummy,
 					&labels, &dummy_labels)
 				label++
-			} else if has_unmarked_background_below(color, x, y, data, &labels) {
+			} else if has_unmarked_background_below(color, x, y, data) {
 				// step 2: newly encountered internal contour
 				if has_label(x, y, &labels) {
 					// part of an external contour. Already labeled
