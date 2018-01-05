@@ -52,9 +52,9 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	return &labels
 }
 
-func has_unmarked_background_below(color int, x int, y int, data *[][]int, labels *[][]int) bool {
+func has_unmarked_background_below(color int, x int, y int, data *[][]int) bool {
 	if (*data)[y+1][x] != color &&
-		(*labels)[y+1][x] == 0 {
+		(*data)[y+1][x] != -1 {
 		return true
 	} else {
 		return false
