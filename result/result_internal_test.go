@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_has_unmarked_background_below1(t *testing.T) {
+func Test_map_labels(t *testing.T) {
 	res1 := One_color_result{
 		{0, 0, 1, 2},
 		{3, 0, 1, 2},
