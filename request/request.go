@@ -58,7 +58,7 @@ func process_files(files []string, remove bool) {
 			continue
 		}
 		result := run_request(request)
-		if !results_equal(result, request.Expected_data) {
+		if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
 			rlog.Warn("process_files, result mismatch, file:", file,
 				"\nresult:", result,
 				"\nexpected:", request.Expected_data)
@@ -95,8 +95,8 @@ func read_request(file string) (Request, error) {
 	return request, nil
 }
 
-func results_equal(result result.Result, expected result.Result) bool {
-	return result.Equal(expected)
+func results_equal(actual result.Result, expected result.Result, color_range int) bool {
+	return result.Equal(actual, expected, color_range)
 }
 
 func write_result(file string, result result.Result) {
