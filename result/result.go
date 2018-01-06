@@ -53,6 +53,25 @@ func valid_item(width int, height int, item One_color_result) bool {
 	return true
 }
 
+func (r1 One_color_result) map_labels(r2 One_color_result) []Label {
+	height := len(r1)
+	width := len(r1[0])
+	label_map := prepare_label_map(width, height)
+	for y, row := range r1 {
+		for x, label1 := range row {
+			label2 := r2[y][x]
+			if label_map[label1] == -1 {
+				label_map[label1] = label2
+			} else if label_map[label1] != label2 {
+				log.Fatalf("multiple labels, x: %v, y: %v, label1: %v," +
+					" old label2: %v, new label2: %v",
+					x, y, label1, label_map[label1], label2)
+			}
+		}
+	}
+	return label_map
+}
+
 func prepare_label_map(width int, height int) []Label {
 	label_map := make([]Label, width * height)
 	for i := range label_map {
