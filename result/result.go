@@ -10,9 +10,14 @@ type One_color_result [][]Label
 
 type Result []One_color_result
 
-func (r1 Result) Equal(r2 Result) bool {
-	// FIXME not implemented
-	return false
+func Equal(r1 Result, r2 Result, color_range int) bool {
+	for i := 0; i < color_range; i++ {
+		res := one_color_result_equal(r1[i], r2[i])
+		if !res {
+			return false
+		}
+	}
+	return true
 }
 
 func Build_result(data []*[][]int) Result {
