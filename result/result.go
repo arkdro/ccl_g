@@ -52,3 +52,11 @@ func valid_item(width int, height int, item One_color_result) bool {
 	}
 	return true
 }
+
+func prepare_label_map(width int, height int) []Label {
+	label_map := make([]Label, width * height)
+	for i := range label_map {
+		label_map[i] = -1
+	}
+	return label_map
+}
