@@ -11,6 +11,23 @@ func (r1 Result) Equal(r2 Result) bool {
 	return false
 }
 
+func Build_result(data []*[][]int) Result {
+	res := make(Result, 0)
+	for _, item := range data {
+		one_color_result := make([][]Node, 0)
+		for _, row := range *item {
+			node_row := make([]Node, 0)
+			for _, point := range row {
+				node := Node(point)
+				node_row = append(node_row, node)
+			}
+			one_color_result = append(one_color_result, node_row)
+		}
+		res = append(res, one_color_result)
+	}
+	return res
+}
+
 func (r Result) Valid_data(width int, height int, color_range int) bool {
 	if len(r) != color_range {
 		return false
