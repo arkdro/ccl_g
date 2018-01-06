@@ -1,0 +1,25 @@
+package result
+
+import (
+	"reflect"
+	"testing"
+)
+
+func Test_has_unmarked_background_below1(t *testing.T) {
+	res1 := One_color_result{
+		{0, 0, 1, 2},
+		{3, 0, 1, 2},
+		{0, 3, 3, 2},
+	}
+	res2 := One_color_result{
+		{5, 5, 1, 4},
+		{3, 5, 1, 4},
+		{5, 3, 3, 4},
+	}
+	expected := []Label{5, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1}
+	actual := res1.map_labels(res2)
+	if !reflect.DeepEqual(actual, expected) {
+		t.Error("map_labels mismatch")
+	}
+}
+
