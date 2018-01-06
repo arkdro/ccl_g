@@ -1,8 +1,8 @@
 package result
 
-type Node int
+type Label int
 
-type One_color_result [][]Node
+type One_color_result [][]Label
 
 type Result []One_color_result
 
@@ -14,14 +14,14 @@ func (r1 Result) Equal(r2 Result) bool {
 func Build_result(data []*[][]int) Result {
 	res := make(Result, 0)
 	for _, item := range data {
-		one_color_result := make([][]Node, 0)
+		one_color_result := make([][]Label, 0)
 		for _, row := range *item {
-			node_row := make([]Node, 0)
+			label_row := make([]Label, 0)
 			for _, point := range row {
-				node := Node(point)
-				node_row = append(node_row, node)
+				label := Label(point)
+				label_row = append(label_row, label)
 			}
-			one_color_result = append(one_color_result, node_row)
+			one_color_result = append(one_color_result, label_row)
 		}
 		res = append(res, one_color_result)
 	}
