@@ -64,9 +64,10 @@ func valid_item(width int, height int, item One_color_result) bool {
 
 func one_color_result_equal(r1 One_color_result, r2 One_color_result) bool {
 	label_map := r1.map_labels(r2)
-	for _, row := range r1 {
-		for _, label := range row {
-			if label != label_map[label] {
+	for y, row := range r1 {
+		for x, label := range row {
+			label2 := r2[y][x]
+			if label_map[label] != label2 {
 				return false
 			}
 		}
