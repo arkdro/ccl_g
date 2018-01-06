@@ -1,5 +1,9 @@
 package result
 
+import (
+	"log"
+)
+
 type Label int
 
 type One_color_result [][]Label
