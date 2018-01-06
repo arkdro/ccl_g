@@ -1,8 +1,6 @@
 package result
 
-type Node struct {
-	Val int
-}
+type Node int
 
 type One_color_result [][]Node
 
