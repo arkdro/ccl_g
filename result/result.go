@@ -10,6 +10,14 @@ type One_color_result [][]Label
 
 type Result []One_color_result
 
+type Label_error struct {
+	x int
+	y int
+	key Label
+	val_old Label
+	val_new Label
+}
+
 func Equal(r1 Result, r2 Result, color_range int) bool {
 	for i := 0; i < color_range; i++ {
 		res := one_color_result_equal(r1[i], r2[i])
@@ -75,7 +83,7 @@ func one_color_result_equal(r1 One_color_result, r2 One_color_result) bool {
 	return true
 }
 
-func (r1 One_color_result) map_labels(r2 One_color_result) []Label {
+func (r1 One_color_result) map_labels(r2 One_color_result) ([]Label, bool, Label_error) {
 	height := len(r1)
 	width := len(r1[0])
 	label_map := prepare_label_map(width, height)
@@ -85,13 +93,18 @@ func (r1 One_color_result) map_labels(r2 One_color_result) []Label {
 			if label_map[label1] == -1 {
 				label_map[label1] = label2
 			} else if label_map[label1] != label2 {
-				log.Panicf("multiple labels, x: %v, y: %v, label1: %v," +
-					" old label2: %v, new label2: %v",
-					x, y, label1, label_map[label1], label2)
+				label_error := Label_error{
+					x: x,
+					y: y,
+					key: label1,
+					val_old: label_map[label1],
+					val_new: label2,
+				}
+				return []Label{}, false, label_error
 			}
 		}
 	}
-	return label_map
+	return label_map, true, Label_error{}
 }
 
 func prepare_label_map(width int, height int) []Label {
