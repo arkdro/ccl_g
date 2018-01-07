@@ -85,7 +85,7 @@ func (r1 One_color_result) map_labels(r2 One_color_result) []Label {
 			if label_map[label1] == -1 {
 				label_map[label1] = label2
 			} else if label_map[label1] != label2 {
-				log.Fatalf("multiple labels, x: %v, y: %v, label1: %v," +
+				log.Panicf("multiple labels, x: %v, y: %v, label1: %v," +
 					" old label2: %v, new label2: %v",
 					x, y, label1, label_map[label1], label2)
 			}

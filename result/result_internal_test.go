@@ -41,3 +41,45 @@ func Test_one_color_result_equal(t *testing.T) {
 	}
 }
 
+func Test_one_color_result_equal2(t *testing.T) {
+	defer func() {
+		r := recover()
+		if r == nil {
+			t.Error("one_color_result_equal 2 did not crash")
+		}
+	}()
+
+	res1 := One_color_result{
+		{4, 4, 1, 2},
+		{3, 4, 1, 2},
+		{4, 3, 3, 2},
+	}
+	res2 := One_color_result{
+		{5, 5, 1, 4},
+		{5, 5, 1, 4},
+		{5, 5, 5, 4},
+	}
+	one_color_result_equal(res1, res2)
+}
+
+func Test_one_color_result_equal3(t *testing.T) {
+	defer func() {
+		r := recover()
+		if r == nil {
+			t.Error("one_color_result_equal 3 did not crash")
+		}
+	}()
+
+	res2 := One_color_result{
+		{4, 4, 1, 2},
+		{3, 4, 1, 2},
+		{4, 3, 3, 2},
+	}
+	res1 := One_color_result{
+		{5, 5, 1, 4},
+		{5, 5, 1, 4},
+		{5, 5, 5, 4},
+	}
+	one_color_result_equal(res1, res2)
+}
+
