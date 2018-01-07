@@ -71,11 +71,25 @@ func valid_item(width int, height int, item One_color_result) bool {
 }
 
 func one_color_result_equal(r1 One_color_result, r2 One_color_result) bool {
-	label_map := r1.map_labels(r2)
+	label_map, status, err1 := r1.map_labels(r2)
+	if status == false {
+		log.Printf("multiple labels, x: %v, y: %v, label1: %v," +
+			" old label2: %v, new label2: %v",
+			err1.x, err1.y, err1.key, err1.val_old, err1.val_new)
+		return false
+	}
+	label_map2, status2, err2 := r2.map_labels(r1)
+	if status2 == false {
+		log.Printf("multiple labels, reverse, x: %v, y: %v, label1: %v," +
+			" old label2: %v, new label2: %v",
+			err2.x, err2.y, err2.key, err2.val_old, err2.val_new)
+		return false
+	}
 	for y, row := range r1 {
 		for x, label := range row {
 			label2 := r2[y][x]
-			if label_map[label] != label2 {
+			if label_map[label] != label2 ||
+				label_map2[label2] != label {
 				return false
 			}
 		}
