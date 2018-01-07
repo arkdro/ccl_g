@@ -17,9 +17,11 @@ func Test_map_labels(t *testing.T) {
 		{5, 3, 3, 4},
 	}
 	expected := []Label{5, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1}
-	actual := res1.map_labels(res2)
-	if !reflect.DeepEqual(actual, expected) {
-		t.Error("map_labels mismatch")
+	actual, status, _ := res1.map_labels(res2)
+	if status != true {
+		t.Error("map_labels status mismatch")
+	} else if !reflect.DeepEqual(actual, expected) {
+		t.Error("map_labels data mismatch")
 	}
 }
 
@@ -42,13 +44,6 @@ func Test_one_color_result_equal(t *testing.T) {
 }
 
 func Test_one_color_result_equal2(t *testing.T) {
-	defer func() {
-		r := recover()
-		if r == nil {
-			t.Error("one_color_result_equal 2 did not crash")
-		}
-	}()
-
 	res1 := One_color_result{
 		{4, 4, 1, 2},
 		{3, 4, 1, 2},
@@ -59,27 +54,28 @@ func Test_one_color_result_equal2(t *testing.T) {
 		{5, 5, 1, 4},
 		{5, 5, 5, 4},
 	}
-	one_color_result_equal(res1, res2)
+	expected := false
+	actual := one_color_result_equal(res1, res2)
+	if actual != expected {
+		t.Error("one_color_result_equal 2 mismatch")
+	}
 }
 
 func Test_one_color_result_equal3(t *testing.T) {
-	defer func() {
-		r := recover()
-		if r == nil {
-			t.Error("one_color_result_equal 3 did not crash")
-		}
-	}()
-
-	res2 := One_color_result{
+	res1 := One_color_result{
 		{4, 4, 1, 2},
 		{3, 4, 1, 2},
 		{4, 3, 3, 2},
 	}
-	res1 := One_color_result{
+	res2 := One_color_result{
 		{5, 5, 1, 4},
 		{5, 5, 1, 4},
 		{5, 5, 5, 4},
 	}
-	one_color_result_equal(res1, res2)
+	expected := false
+	actual := one_color_result_equal(res2, res1)
+	if actual != expected {
+		t.Error("one_color_result_equal 2 mismatch")
+	}
 }
 
