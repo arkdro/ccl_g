@@ -75,7 +75,7 @@ func Test_one_color_result_equal3(t *testing.T) {
 	expected := false
 	actual := one_color_result_equal(res2, res1)
 	if actual != expected {
-		t.Error("one_color_result_equal 2 mismatch")
+		t.Error("one_color_result_equal 3 mismatch")
 	}
 }
 
