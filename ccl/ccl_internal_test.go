@@ -610,24 +610,24 @@ func Test_tracer3(t *testing.T) {
 		{-1, 4, 3},
 		{4, 2, 3},
 	}
-	expected_dummy := []int{0, 0, 0}
+	expected_dummy := prepare_dummy(width)
 	expected_labels := [][]int{
 		{0, 0, 0},
 		{0, 1, 0},
 		{1, 0, 0},
 	}
 	expected_dummy_labels := []int{0, 0, 0}
-	expected_point := point.Point{X: 0, Y: 2}
+	expected_point := point.Point{X: 1, Y: 1}
 	point2, pos2, status := tracer(width, height, color, pt, label, &data, dummy, &labels, &dummy_labels, init_pos)
 	if point2 != expected_point {
 		t.Error("tracer 3 point mismatch")
-	} else if pos2 != 3 {
+	} else if pos2 != 7 {
 		t.Error("tracer 3 pos mismatch")
 	} else if status != true {
 		t.Error("tracer 3 status mismatch")
 	} else if !reflect.DeepEqual(data, expected_data) {
 		t.Error("tracer 3 data mismatch")
-	} else if !reflect.DeepEqual(dummy, expected_dummy) {
+	} else if !reflect.DeepEqual(*dummy, expected_dummy) {
 		t.Error("tracer 3 dummy mismatch")
 	} else if !reflect.DeepEqual(labels, expected_labels) {
 		t.Error("tracer 3 labels mismatch")
