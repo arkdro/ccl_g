@@ -571,6 +571,55 @@ func Test_tracer2(t *testing.T) {
 	}
 }
 
+func Test_tracer3(t *testing.T) {
+	pt := point.Point{X: 0, Y: 2}
+	color := 4
+	label := 1
+	init_pos := 2
+	data := [][]int{
+		{1, 2, 3},
+		{1, 4, 3},
+		{4, 2, 3},
+	}
+	labels := [][]int{
+		{0, 0, 0},
+		{0, 1, 0},
+		{1, 0, 0},
+	}
+	width := 3
+	dummy := prepare_dummy(width)
+	dummy_labels := make([]int, width)
+	expected_data := [][]int{
+		{1, 2, 3},
+		{-1, 4, 3},
+		{4, 2, 3},
+	}
+	expected_dummy := []int{0, 0, 0}
+	expected_labels := [][]int{
+		{0, 0, 0},
+		{0, 1, 0},
+		{1, 0, 0},
+	}
+	expected_dummy_labels := []int{0, 0, 0}
+	expected_point := point.Point{X: 0, Y: 2}
+	point2, pos2, status := tracer(color, pt, label, &data, dummy, &labels, &dummy_labels, init_pos)
+	if point2 != expected_point {
+		t.Error("tracer 3 point mismatch")
+	} else if pos2 != 3 {
+		t.Error("tracer 3 pos mismatch")
+	} else if status != true {
+		t.Error("tracer 3 status mismatch")
+	} else if !reflect.DeepEqual(data, expected_data) {
+		t.Error("tracer 3 data mismatch")
+	} else if !reflect.DeepEqual(dummy, expected_dummy) {
+		t.Error("tracer 3 dummy mismatch")
+	} else if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("tracer 3 labels mismatch")
+	} else if !reflect.DeepEqual(dummy_labels, expected_dummy_labels) {
+		t.Error("tracer 3 dummy labels mismatch")
+	}
+}
+
 func Test_external_contour_tracing(t *testing.T) {
 	x := 1
 	y := 0
