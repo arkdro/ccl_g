@@ -203,14 +203,14 @@ func same_colors(color1 int, color2 int) bool {
 }
 
 func mark_background_point(width int, height int, pt point.Point, data *[][]int, dummy *[]int) {
-	if pt.Y < 0 {
-		(*dummy)[pt.X] = -1
-	} else if pt.X < 0 {
+	if pt.X < 0 {
 		// nothing
 	} else if pt.Y >= height {
 		// nothing
 	} else if pt.X >= width {
 		// nothing
+	} else if pt.Y < 0 {
+		(*dummy)[pt.X] = -1
 	} else {
 		(*data)[pt.Y][pt.X] = -1
 	}
