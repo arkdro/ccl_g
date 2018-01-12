@@ -18,7 +18,7 @@ func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 
 func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
-	dummy := make([]int, width)
+	dummy := prepare_dummy(width)
 	dummy_labels := make([]int, width)
 	label := 1
 	for y := 0; y < height; y++ {
@@ -282,3 +282,10 @@ func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
 	return &data
 }
 
+func prepare_dummy(width int) *[]int {
+	dummy := make([]int, width)
+	for x := 0; x < width; x++ {
+		dummy[x] = -2
+	}
+	return &dummy
+}
