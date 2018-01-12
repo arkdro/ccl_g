@@ -27,10 +27,10 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 				continue
 			}
 			if has_no_label(x, y, &labels) &&
-				has_background_above(color, x, y, data, &dummy) {
+				has_background_above(color, x, y, data, dummy) {
 				// step 1: external contour of a new component
 				labels[y][x] = label
-				external_contour_tracing(color, x, y, label, data, &dummy,
+				external_contour_tracing(color, x, y, label, data, dummy,
 					&labels, &dummy_labels)
 				label++
 			} else if has_unmarked_background_below(color, x, y, data) {
@@ -41,7 +41,7 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 					// left neighbor must be labeled
 					copy_left_label(x, y, &labels)
 				}
-				internal_contour_tracing(color, x, y, labels[y][x], data, &dummy,
+				internal_contour_tracing(color, x, y, labels[y][x], data, dummy,
 					&labels, &dummy_labels)
 			} else if has_no_label(x, y, &labels) {
 				// step 3: left neighbor must be a labeled pixel
