@@ -17,7 +17,8 @@ func Test_has_unmarked_background_below1(t *testing.T) {
 		{1, 2, 3},
 		{1, 2, 3},
 	}
-	actual := has_unmarked_background_below(color, x, y, &data)
+	height := 4
+	actual := has_unmarked_background_below(height, color, x, y, &data)
 	expected := true
 	if actual != expected {
 		t.Error("has_unmarked_background_below 1 mismatch")
@@ -34,7 +35,8 @@ func Test_has_unmarked_background_below2(t *testing.T) {
 		{1, 2, 3},
 		{1, 1, 3},
 	}
-	actual := has_unmarked_background_below(color, x, y, &data)
+	height := 4
+	actual := has_unmarked_background_below(height, color, x, y, &data)
 	expected := false
 	if actual != expected {
 		t.Error("has_unmarked_background_below 2 mismatch")
@@ -51,7 +53,8 @@ func Test_has_unmarked_background_below3(t *testing.T) {
 		{1, 2, 3},
 		{1, -1, 3},
 	}
-	actual := has_unmarked_background_below(color, x, y, &data)
+	height := 4
+	actual := has_unmarked_background_below(height, color, x, y, &data)
 	expected := false
 	if actual != expected {
 		t.Error("has_unmarked_background_below 3 mismatch")
@@ -303,7 +306,9 @@ func Test_get_color1(t *testing.T) {
 		{1, 4, 3},
 		{1, 2, 3},
 	}
-	actual := get_color(pt, &data, color)
+	width := 3
+	height := 3
+	actual := get_color(width, height, pt, &data, color)
 	expected := 4
 	if actual != expected {
 		t.Error("get_color 1 mismatch")
@@ -318,7 +323,9 @@ func Test_get_color2(t *testing.T) {
 		{1, 4, 3},
 		{1, 2, 3},
 	}
-	actual := get_color(pt, &data, color)
+	width := 3
+	height := 3
+	actual := get_color(width, height, pt, &data, color)
 	expected := 3
 	if actual != expected {
 		t.Error("get_color 2 mismatch")
@@ -359,7 +366,9 @@ func Test_mark_background_point1(t *testing.T) {
 		{1, 2, 3},
 	}
 	expected_dummy := make([]int, 3)
-	mark_background_point(pt, &data, &dummy)
+	width := 3
+	height := 3
+	mark_background_point(width, height, pt, &data, &dummy)
 	if !reflect.DeepEqual(data, expected_data) ||
 		!reflect.DeepEqual(dummy, expected_dummy) {
 		t.Error("mark_background_point 1 mismatch")
@@ -379,8 +388,10 @@ func Test_mark_background_point2(t *testing.T) {
 		{1, 1, 3},
 		{1, 2, 3},
 	}
+	width := 3
+	height := 3
 	expected_dummy := []int{0, -1, 0}
-	mark_background_point(pt, &data, &dummy)
+	mark_background_point(width, height, pt, &data, &dummy)
 	if !reflect.DeepEqual(data, expected_data) ||
 		!reflect.DeepEqual(dummy, expected_dummy) {
 		t.Error("mark_background_point 2 mismatch")
@@ -477,6 +488,8 @@ func Test_calc_next_pos(t *testing.T) {
 
 func Test_tracer1(t *testing.T) {
 	pt := point.Point{X: 1, Y: 1}
+	width := 3
+	height := 3
 	color := 4
 	label := 1
 	init_pos := 7
@@ -505,7 +518,7 @@ func Test_tracer1(t *testing.T) {
 	}
 	expected_dummy_labels := []int{0, 0, 0}
 	expected_point := point.Point{}
-	point2, pos2, status := tracer(color, pt, label, &data, &dummy, &labels, &dummy_labels, init_pos)
+	point2, pos2, status := tracer(width, height, color, pt, label, &data, &dummy, &labels, &dummy_labels, init_pos)
 	if point2 != expected_point {
 		t.Error("tracer 1 point mismatch")
 	} else if pos2 != 0 {
@@ -525,6 +538,8 @@ func Test_tracer1(t *testing.T) {
 
 func Test_tracer2(t *testing.T) {
 	pt := point.Point{X: 1, Y: 1}
+	width := 3
+	height := 3
 	color := 4
 	label := 1
 	init_pos := 7
@@ -553,7 +568,7 @@ func Test_tracer2(t *testing.T) {
 	}
 	expected_dummy_labels := []int{0, 0, 0}
 	expected_point := point.Point{X: 0, Y: 2}
-	point2, pos2, status := tracer(color, pt, label, &data, &dummy, &labels, &dummy_labels, init_pos)
+	point2, pos2, status := tracer(width, height, color, pt, label, &data, &dummy, &labels, &dummy_labels, init_pos)
 	if point2 != expected_point {
 		t.Error("tracer 2 point mismatch")
 	} else if pos2 != 3 {
@@ -587,6 +602,7 @@ func Test_tracer3(t *testing.T) {
 		{1, 0, 0},
 	}
 	width := 3
+	height := 3
 	dummy := prepare_dummy(width)
 	dummy_labels := make([]int, width)
 	expected_data := [][]int{
@@ -602,7 +618,7 @@ func Test_tracer3(t *testing.T) {
 	}
 	expected_dummy_labels := []int{0, 0, 0}
 	expected_point := point.Point{X: 0, Y: 2}
-	point2, pos2, status := tracer(color, pt, label, &data, dummy, &labels, &dummy_labels, init_pos)
+	point2, pos2, status := tracer(width, height, color, pt, label, &data, dummy, &labels, &dummy_labels, init_pos)
 	if point2 != expected_point {
 		t.Error("tracer 3 point mismatch")
 	} else if pos2 != 3 {
@@ -621,6 +637,8 @@ func Test_tracer3(t *testing.T) {
 }
 
 func Test_external_contour_tracing(t *testing.T) {
+	width := 8
+	height := 7
 	x := 1
 	y := 0
 	color := 1
@@ -665,7 +683,7 @@ func Test_external_contour_tracing(t *testing.T) {
 		{0, 3, 3, 3, 3, 3, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 	}
-	external_contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+	external_contour_tracing(width, height, color, x, y, label, &data, &dummy, &labels, &dummy_labels)
 	if !reflect.DeepEqual(data, expected_data) {
 		t.Error("external_contour_tracing data mismatch")
 	} else if !reflect.DeepEqual(dummy, expected_dummy) {
@@ -678,6 +696,8 @@ func Test_external_contour_tracing(t *testing.T) {
 }
 
 func Test_external_contour_tracing2(t *testing.T) {
+	width := 8
+	height := 7
 	x := 1
 	y := 0
 	color := 1
@@ -722,7 +742,7 @@ func Test_external_contour_tracing2(t *testing.T) {
 		{0, 0, 0, 0, 0, 0, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 	}
-	external_contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+	external_contour_tracing(width, height, color, x, y, label, &data, &dummy, &labels, &dummy_labels)
 	if !reflect.DeepEqual(data, expected_data) {
 		t.Error("external_contour_tracing 2 data mismatch")
 	} else if !reflect.DeepEqual(dummy, expected_dummy) {
@@ -735,6 +755,8 @@ func Test_external_contour_tracing2(t *testing.T) {
 }
 
 func Test_internal_contour_tracing1(t *testing.T) {
+	width := 8
+	height := 7
 	x := 2
 	y := 0
 	color := 1
@@ -779,7 +801,7 @@ func Test_internal_contour_tracing1(t *testing.T) {
 		{0, 3, 3, 3, 3, 3, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 	}
-	internal_contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+	internal_contour_tracing(width, height, color, x, y, label, &data, &dummy, &labels, &dummy_labels)
 	if !reflect.DeepEqual(data, expected_data) {
 		t.Error("internal_contour_tracing 1 data mismatch")
 	} else if !reflect.DeepEqual(dummy, expected_dummy) {
@@ -792,6 +814,8 @@ func Test_internal_contour_tracing1(t *testing.T) {
 }
 
 func Test_internal_contour_tracing2(t *testing.T) {
+	width := 8
+	height := 7
 	x := 3
 	y := 1
 	color := 1
@@ -836,7 +860,7 @@ func Test_internal_contour_tracing2(t *testing.T) {
 		{0, 3, 3, 3, 3, 3, 0, 0},
 		{0, 0, 0, 0, 0, 0, 0, 0},
 	}
-	internal_contour_tracing(color, x, y, label, &data, &dummy, &labels, &dummy_labels)
+	internal_contour_tracing(width, height, color, x, y, label, &data, &dummy, &labels, &dummy_labels)
 	if !reflect.DeepEqual(data, expected_data) {
 		t.Error("internal_contour_tracing 2 data mismatch")
 	} else if !reflect.DeepEqual(dummy, expected_dummy) {
