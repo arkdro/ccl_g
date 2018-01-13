@@ -627,7 +627,7 @@ func Test_tracer3(t *testing.T) {
 		t.Error("tracer 3 status mismatch")
 	} else if !reflect.DeepEqual(data, expected_data) {
 		t.Error("tracer 3 data mismatch")
-	} else if !reflect.DeepEqual(*dummy, expected_dummy) {
+	} else if !reflect.DeepEqual(*dummy, *expected_dummy) {
 		t.Error("tracer 3 dummy mismatch")
 	} else if !reflect.DeepEqual(labels, expected_labels) {
 		t.Error("tracer 3 labels mismatch")
