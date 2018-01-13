@@ -33,7 +33,8 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 				external_contour_tracing(width, height, color, x, y, label, data, dummy,
 					&labels, &dummy_labels)
 				label++
-			} else if has_unmarked_background_below(height, color, x, y, data) {
+			}
+			if has_unmarked_background_below(height, color, x, y, data) {
 				// step 2: newly encountered internal contour
 				if has_label(x, y, &labels) {
 					// part of an external contour. Already labeled
@@ -43,11 +44,10 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 				}
 				internal_contour_tracing(width, height, color, x, y, labels[y][x], data, dummy,
 					&labels, &dummy_labels)
-			} else if has_no_label(x, y, &labels) {
+			}
+			if has_no_label(x, y, &labels) {
 				// step 3: left neighbor must be a labeled pixel
 				copy_left_label(x, y, &labels)
-			} else {
-				// already has label
 			}
 		}
 	}
