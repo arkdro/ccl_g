@@ -97,34 +97,30 @@ func one_color_result_equal(r1 One_color_result, r2 One_color_result) bool {
 	return true
 }
 
-func (r1 One_color_result) map_labels(r2 One_color_result) ([]Label, bool, Label_error) {
-	height := len(r1)
-	width := len(r1[0])
-	label_map := prepare_label_map(width, height)
+func (r1 One_color_result) map_labels(r2 One_color_result) (map[Label]Label, bool, Label_error) {
+	label_map := prepare_label_map()
 	for y, row := range r1 {
 		for x, label1 := range row {
 			label2 := r2[y][x]
-			if label_map[label1] == -1 {
+			val, found := label_map[label1]
+			if !found {
 				label_map[label1] = label2
-			} else if label_map[label1] != label2 {
+			} else if val != label2 {
 				label_error := Label_error{
 					x: x,
 					y: y,
 					key: label1,
-					val_old: label_map[label1],
+					val_old: val,
 					val_new: label2,
 				}
-				return []Label{}, false, label_error
+				return prepare_label_map(), false, label_error
 			}
 		}
 	}
 	return label_map, true, Label_error{}
 }
 
-func prepare_label_map(width int, height int) []Label {
-	label_map := make([]Label, width * height)
-	for i := range label_map {
-		label_map[i] = -1
-	}
+func prepare_label_map() map[Label]Label {
+	label_map := make(map[Label]Label)
 	return label_map
 }
