@@ -16,7 +16,7 @@ func Test_map_labels(t *testing.T) {
 		{3, 5, 1, 4},
 		{5, 3, 3, 4},
 	}
-	expected := []Label{5, 1, 4, 3, -1, -1, -1, -1, -1, -1, -1, -1}
+	expected := map[Label]Label{0:5, 1:1, 2:4, 3:3}
 	actual, status, _ := res1.map_labels(res2)
 	if status != true {
 		t.Error("map_labels status mismatch")
