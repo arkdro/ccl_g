@@ -66,6 +66,12 @@ func init_empty_label_set() map[int]bool {
 	return make(map[int]bool)
 }
 
+func init_label_set(label int) map[int]bool {
+	res := make(map[int]bool)
+	res[label] = true
+	return res
+}
+
 func has_unmarked_background_below(height int, color int, x int, y int, data *[][]int) bool {
 	if y >= height-1 {
 		// current row is the last row
