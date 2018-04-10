@@ -62,6 +62,10 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
+func init_empty_label_set() map[int]bool {
+	return make(map[int]bool)
+}
+
 func has_unmarked_background_below(height int, color int, x int, y int, data *[][]int) bool {
 	if y >= height-1 {
 		// current row is the last row
