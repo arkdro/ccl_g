@@ -256,99 +256,6 @@ func get_color(width int, height int, pt point.Point, data *[][]int, orig_color 
 	}
 }
 
-func same_color_as_left(x int, y int, data *[][]int) bool {
-	i := -1
-	(*data)[i][i] = 1234 // FIXME not implemented
-	if x <= 0 {
-		return false
-	}
-}
-
-func same_colors(color1 int, color2 int) bool {
-	return color1 == color2
-}
-
-func mark_background_point(width int, height int, pt point.Point, data *[][]int, dummy *[]int) {
-	if pt.X < 0 {
-		// nothing
-	} else if pt.Y >= height {
-		// nothing
-	} else if pt.X >= width {
-		// nothing
-	} else if pt.Y < 0 {
-		(*dummy)[pt.X] = -1
-	} else {
-		(*data)[pt.Y][pt.X] = -1
-	}
-}
-
-func mark_foreground_point(label int, pt point.Point, labels *[][]int) {
-	(*labels)[pt.Y][pt.X] = label
-}
-
-func next_pos(pos int) int {
-	new_pos := (pos + 1) % connectivity
-	return new_pos
-}
-
-func get_neighbour_coord(pt point.Point, pos int) point.Point {
-	dx, dy := pos_to_delta(pos)
-	point2 := point.Point{X: pt.X + dx, Y: pt.Y + dy}
-	return point2
-}
-
-func pos_to_delta(pos int) (int, int) {
-	var dx, dy int
-	switch pos {
-	case 0:
-		dx, dy = 1, 0
-	case 1:
-		dx, dy = 1, 1
-	case 2:
-		dx, dy = 0, 1
-	case 3:
-		dx, dy = -1, 1
-	case 4:
-		dx, dy = -1, 0
-	case 5:
-		dx, dy = -1, -1
-	case 6:
-		dx, dy = 0, -1
-	case 7:
-		dx, dy = 1, -1
-	}
-	return dx, dy
-}
-
-func calc_next_pos(pos int) int {
-	prev_pos := prev_point_pos(pos)
-	next_pos := (prev_pos + 2) % connectivity
-	return next_pos
-}
-
-func prev_point_pos(pos int) int {
-	var prev_pos int
-	switch pos {
-	case 0:
-		prev_pos = 4
-	case 1:
-		prev_pos = 5
-	case 2:
-		prev_pos = 6
-	case 3:
-		prev_pos = 7
-	case 4:
-		prev_pos = 0
-	case 5:
-		prev_pos = 1
-	case 6:
-		prev_pos = 2
-	case 7:
-		prev_pos = 3
-	}
-	return prev_pos
-}
-
 func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
 	data := make([][]int, height)
 	for y := 0; y < height; y++ {
@@ -361,12 +268,4 @@ func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
 		}
 	}
 	return &data
-}
-
-func prepare_dummy(width int) *[]int {
-	dummy := make([]int, width)
-	for x := 0; x < width; x++ {
-		dummy[x] = -2
-	}
-	return &dummy
 }
