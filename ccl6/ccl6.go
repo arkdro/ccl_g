@@ -42,7 +42,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 			} else {
 				neigbour_labels := find_neigbour_labels(neigbours, labels)
 				min_label := find_minimal_label(neigbour_labels)
-				labels[y][x] = min_label
+				(*labels)[y][x] = min_label
 				set_equivalence(neigbour_labels, &linked)
 			}
 		}
