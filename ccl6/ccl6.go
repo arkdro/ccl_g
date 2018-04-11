@@ -51,7 +51,6 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 }
 
 func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int, linked *[]map[int]bool) {
-	label := 1
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
 			if is_background(color, x, y, data) {
