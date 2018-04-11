@@ -34,7 +34,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 			if is_background(color, x, y, data) {
 				continue
 			}
-			neigbours := same_color_neigbours(x, y, data)
+			neigbours := same_color_neigbours(width, color, x, y, data)
 			if no_neigbours(neigbours) {
 				fresh_label_set := init_label_set(label)
 				*linked = append(*linked, fresh_label_set)
@@ -61,6 +61,23 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 			labels[y][x] = min_label
 		}
 	}
+}
+
+func same_color_neigbours(width int, colour int, x int, y int, data *[][]int) []point.Point {
+	result := make([]point.Point, 0)
+	left, left_valid := get_left_point(color.Color(colour), x, y, data)
+	upper_left, upper_left_valid := get_upper_left_point(color.Color(colour), x, y, data)
+	upper_right, upper_right_valid := get_upper_right_point(width, color.Color(colour), x, y, data)
+	if left_valid == true {
+		result = append(result, left)
+	}
+	if upper_left_valid == true {
+		result = append(result, upper_left)
+	}
+	if upper_right_valid == true {
+		result = append(result, upper_right)
+	}
+	return result
 }
 
 func get_left_point(colour color.Color, x int, y int, data *[][]int) (point.Point, bool) {
