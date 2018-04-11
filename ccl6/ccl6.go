@@ -62,6 +62,10 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
+func no_neigbours(neigbours []point.Point) bool {
+	return len(neigbours) == 0
+}
+
 func init_empty_label_set() map[int]bool {
 	return make(map[int]bool)
 }
