@@ -63,6 +63,10 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
+func is_even(n int) bool {
+	return n % 2 == 0
+}
+
 func no_neigbours(neigbours []point.Point) bool {
 	return len(neigbours) == 0
 }
