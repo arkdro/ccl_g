@@ -76,6 +76,16 @@ func init_label_set(label int) map[int]bool {
 	return res
 }
 
+func find_minimal_label(labels []int) int {
+	min := labels[0]
+	for _, x := range labels {
+		if x < min {
+			min = x
+		}
+	}
+	return min
+}
+
 func has_unmarked_background_below(height int, color int, x int, y int, data *[][]int) bool {
 	if y >= height-1 {
 		// current row is the last row
