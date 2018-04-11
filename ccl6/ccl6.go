@@ -44,7 +44,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 				neigbour_labels := find_neigbour_labels(neigbours, labels)
 				min_label := find_minimal_label(neigbour_labels)
 				(*labels)[y][x] = min_label
-				set_equivalence(neigbour_labels, &linked)
+				set_equivalence(neigbour_labels, linked)
 			}
 		}
 	}
@@ -169,6 +169,13 @@ func find_minimal_label(labels []int) int {
 		}
 	}
 	return min
+}
+
+func set_equivalence(labels []int, linked *[]map[int]bool) {
+	for _, label := range labels {
+		existing := (*linked)[label]
+		existing[label] = true
+	}
 }
 
 func is_foreground(color int, x int, y int, data *[][]int) bool {
