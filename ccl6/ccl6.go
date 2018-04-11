@@ -184,6 +184,20 @@ func add_labels_to_set(labels []int, equiv_set map[int]bool) {
 	}
 }
 
+func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]map[int]bool) (int, bool) {
+	label := (*labels)[y][x]
+	if label == 0 {
+		return 0, false
+	}
+	equiv_set := (*linked)[label]
+	keys := make([]int, 0)
+	for key := range equiv_set {
+		keys = append(keys, key)
+	}
+	min_label := find_minimal_label(keys)
+	return min_label, true
+}
+
 func is_foreground(color int, x int, y int, data *[][]int) bool {
 	return !is_background(color, x, y, data)
 }
