@@ -171,35 +171,6 @@ func find_minimal_label(labels []int) int {
 	return min
 }
 
-func has_unmarked_background_below(height int, color int, x int, y int, data *[][]int) bool {
-	if y >= height-1 {
-		// current row is the last row
-		return false
-	} else if (*data)[y+1][x] != color &&
-		(*data)[y+1][x] != -1 {
-		return true
-	} else {
-		return false
-	}
-}
-
-func has_background_above(color int, x int, y int, data *[][]int, dummy *[]int) bool {
-	if y > 0 {
-		if (*data)[y - 1][x] != color {
-			return true
-		} else {
-			return false
-		}
-	} else {
-		if (*dummy)[x] != color {
-			return true
-		} else {
-			 // should not happen
-			return false
-		}
-	}
-}
-
 func is_foreground(color int, x int, y int, data *[][]int) bool {
 	return !is_background(color, x, y, data)
 }
@@ -240,69 +211,6 @@ func create_empty_labels(width int, height int) [][]int {
 		labels[y] = row
 	}
 	return labels
-}
-
-func external_contour_tracing(width int, height int, color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int) {
-	pos := 7
-	contour_tracing(width, height, color, x, y, label, data, dummy, labels, dummy_labels, pos)
-}
-
-func internal_contour_tracing(width int, height int, color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int) {
-	pos := 3
-	contour_tracing(width, height, color, x, y, label, data, dummy, labels, dummy_labels, pos)
-}
-
-func contour_tracing(width int, height int, color int, x int, y int, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) {
-	initial_pair_filled := false
-	initial_pair := []point.Point{
-		{x, y},
-		{},
-	}
-	prev_point := point.Point{x, y}
-	pos := init_pos
-	for {
-		new_point, new_pos, found := tracer(width, height, color, prev_point, label, data, dummy, labels, dummy_labels, pos)
-		if ! found {
-			// an isolated point
-			return
-		}
-		if initial_pair_filled {
-			if contour_finished(&initial_pair, new_point, prev_point) {
-				return
-			}
-		} else {
-			update_initial_pair(&initial_pair, new_point)
-			initial_pair_filled = true
-		}
-		prev_point = new_point
-		pos = calc_next_pos(new_pos)
-	}
-}
-
-func tracer(width int, height int, color int, pt point.Point, label int, data *[][]int, dummy *[]int, labels *[][]int, dummy_labels *[]int, init_pos int) (point.Point, int, bool) {
-	for pos := init_pos; ; {
-		point2 := get_neighbour_coord(pt, pos)
-		color2 := get_color(width, height, point2, data, color)
-		if same_colors(color, color2) {
-			mark_foreground_point(label, point2, labels)
-			return point2, pos, true
-		}
-		mark_background_point(width, height, point2, data, dummy)
-		pos = next_pos(pos)
-		if pos == init_pos {
-			break
-		}
-	}
-	return point.Point{}, 0, false
-}
-
-func update_initial_pair(initial_pair *[]point.Point, new_point point.Point) {
-	(*initial_pair)[1] = new_point
-}
-
-func contour_finished(initial_pair *[]point.Point, new_point point.Point, prev_point point.Point) bool {
-	return (*initial_pair)[0] == prev_point &&
-		(*initial_pair)[1] == new_point
 }
 
 func get_color(width int, height int, pt point.Point, data *[][]int, orig_color int) int {
