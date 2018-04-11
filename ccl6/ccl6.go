@@ -63,6 +63,22 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
+func get_left_point(colour color.Color, x int, y int, data *[][]int) (point.Point, bool) {
+	if x <= 0 {
+		return point.Point{}, false
+	}
+	if y < 0 {
+		return point.Point{}, false
+	}
+	new_x := x - 1
+	if is_foreground(int(colour), new_x, y, data) {
+		pt := point.Point{new_x, y}
+		return pt, true
+	} else {
+		return point.Point{}, false
+	}
+}
+
 func get_upper_left_point(colour color.Color, x int, y int, data *[][]int) (point.Point, bool){
 	if y <= 0 {
 		return point.Point{}, false
