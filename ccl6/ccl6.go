@@ -174,7 +174,13 @@ func find_minimal_label(labels []int) int {
 func set_equivalence(labels []int, linked *[]map[int]bool) {
 	for _, label := range labels {
 		existing := (*linked)[label]
-		existing[label] = true
+		add_labels_to_set(labels, existing)
+	}
+}
+
+func add_labels_to_set(labels []int, equiv_set map[int]bool) {
+	for _, label := range labels {
+		equiv_set[label] = true
 	}
 }
 
