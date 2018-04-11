@@ -63,6 +63,25 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
+func get_upper_right_point(width int, colour color.Color, x int, y int, data *[][]int) (point.Point, bool){
+	if y <= 0 {
+		return point.Point{}, false
+	}
+	var new_y = y - 1
+	var new_x int
+	if is_even(y) {
+		if x < width - 1 {
+			new_x = x + 1
+		} else {
+			return point.Point{}, false
+		}
+	} else {
+		new_x = x
+	}
+	pt := point.Point{new_x, new_y}
+	return pt, true
+}
+
 func is_even(n int) bool {
 	return n % 2 == 0
 }
