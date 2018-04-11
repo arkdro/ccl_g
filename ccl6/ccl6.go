@@ -57,8 +57,10 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 			if is_background(color, x, y, data) {
 				continue
 			}
-			min_label := fetch_minimal_label(x, y, labels, linked)
-			labels[y][x] = min_label
+			min_label, label_exists := fetch_minimal_label(x, y, labels, linked)
+			if label_exists == true {
+				(*labels)[y][x] = min_label
+			}
 		}
 	}
 }
