@@ -76,6 +76,15 @@ func init_label_set(label int) map[int]bool {
 	return res
 }
 
+func find_neigbour_labels(neigbours []point.Point, labels *[][]int) []int {
+	result := make([]int, 0)
+	for _, pt := range neigbours {
+		label := (*labels)[pt.Y][pt.X]
+		result = append(result, label)
+	}
+	return result
+}
+
 func find_minimal_label(labels []int) int {
 	min := labels[0]
 	for _, x := range labels {
