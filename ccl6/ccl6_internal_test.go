@@ -174,3 +174,11 @@ func Test_same_color_neigbours2(t *testing.T) {
 	}
 }
 
+func Test_no_neigbours1(t *testing.T) {
+	actual := no_neigbours([]point.Point{})
+	expected := true
+	if actual != expected {
+		t.Error("no_neigbours 1 mismatch")
+	}
+}
+
