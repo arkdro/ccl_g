@@ -182,3 +182,11 @@ func Test_no_neigbours1(t *testing.T) {
 	}
 }
 
+func Test_no_neigbours2(t *testing.T) {
+	actual := no_neigbours([]point.Point{{1,1}})
+	expected := false
+	if actual != expected {
+		t.Error("no_neigbours 2 mismatch")
+	}
+}
+
