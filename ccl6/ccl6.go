@@ -69,6 +69,11 @@ func same_color_neigbours(width int, colour int, x int, y int, data *[][]int) []
 	left, left_valid := get_left_point(color.Color(colour), x, y, data)
 	upper_left, upper_left_valid := get_upper_left_point(color.Color(colour), x, y, data)
 	upper_right, upper_right_valid := get_upper_right_point(width, color.Color(colour), x, y, data)
+func get_neigbour_coordinates(width int, x int, y int) []point.Point {
+	result := make([]point.Point, 0)
+	left, left_valid := get_left_coordinate(x, y)
+	upper_left, upper_left_valid := get_upper_left_coordinate(x, y)
+	upper_right, upper_right_valid := get_upper_right_coordinate(width, x, y)
 	if left_valid == true {
 		result = append(result, left)
 	}
@@ -81,7 +86,7 @@ func same_color_neigbours(width int, colour int, x int, y int, data *[][]int) []
 	return result
 }
 
-func get_left_point(colour color.Color, x int, y int, data *[][]int) (point.Point, bool) {
+func get_left_coordinate(x int, y int) (point.Point, bool) {
 	if x <= 0 {
 		return point.Point{}, false
 	}
@@ -89,15 +94,11 @@ func get_left_point(colour color.Color, x int, y int, data *[][]int) (point.Poin
 		return point.Point{}, false
 	}
 	new_x := x - 1
-	if is_foreground(int(colour), new_x, y, data) {
-		pt := point.Point{new_x, y}
-		return pt, true
-	} else {
-		return point.Point{}, false
-	}
+	pt := point.Point{new_x, y}
+	return pt, true
 }
 
-func get_upper_left_point(colour color.Color, x int, y int, data *[][]int) (point.Point, bool){
+func get_upper_left_coordinate(x int, y int) (point.Point, bool){
 	if y <= 0 {
 		return point.Point{}, false
 	}
@@ -116,7 +117,7 @@ func get_upper_left_point(colour color.Color, x int, y int, data *[][]int) (poin
 	return pt, true
 }
 
-func get_upper_right_point(width int, colour color.Color, x int, y int, data *[][]int) (point.Point, bool){
+func get_upper_right_coordinate(width int, x int, y int) (point.Point, bool){
 	if y <= 0 {
 		return point.Point{}, false
 	}
