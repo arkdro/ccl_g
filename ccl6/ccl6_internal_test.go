@@ -2,8 +2,9 @@ package ccl6
 
 import (
 	"github.com/asdf/ccl_g/point"
-	"github.com/asdf/ccl_g/color"
+//	"github.com/asdf/ccl_g/color"
 
+//	"reflect"
 	"testing"
 )
 
