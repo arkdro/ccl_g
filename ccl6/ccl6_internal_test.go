@@ -198,3 +198,20 @@ func Test_find_minimal_label(t *testing.T) {
 	}
 }
 
+func Test_find_neigbour_labels(t *testing.T) {
+	neigbours := []point.Point{
+		{1, 2},
+		{2, 3},
+	}
+	data := [][]int{
+		{ 1,  2,  3},
+		{11, 21, 31},
+		{12, 22, 32},
+		{13, 23, 33},
+	}
+	actual := find_neigbour_labels(neigbours, &data)
+	if len(actual) != 2 || actual[0] != 22 || actual[1] != 33 {
+		t.Error("find_neigbour_labels mismatch")
+	}
+}
+
