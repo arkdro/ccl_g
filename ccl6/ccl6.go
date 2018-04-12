@@ -248,20 +248,6 @@ func create_empty_labels(width int, height int) [][]int {
 	return labels
 }
 
-func get_color(width int, height int, pt point.Point, data *[][]int, orig_color int) int {
-	if pt.Y < 0 {
-		return orig_color - 1
-	} else if pt.Y >= height {
-		return orig_color - 1
-	} else if pt.X < 0 {
-		return orig_color - 1
-	} else if pt.X >= width {
-		return orig_color - 1
-	} else {
-		return (*data)[pt.Y][pt.X]
-	}
-}
-
 func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
 	data := make([][]int, height)
 	for y := 0; y < height; y++ {
