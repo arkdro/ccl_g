@@ -66,9 +66,15 @@ func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int,
 
 func same_color_neigbours(width int, colour int, x int, y int, data *[][]int) []point.Point {
 	result := make([]point.Point, 0)
-	left, left_valid := get_left_point(color.Color(colour), x, y, data)
-	upper_left, upper_left_valid := get_upper_left_point(color.Color(colour), x, y, data)
-	upper_right, upper_right_valid := get_upper_right_point(width, color.Color(colour), x, y, data)
+	coordinates := get_neigbour_coordinates(width, x, y)
+	for _, pt := range coordinates {
+		if is_foreground(colour, pt.X, pt.Y, data) {
+			result = append(result, pt)
+		}
+	}
+	return result
+}
+
 func get_neigbour_coordinates(width int, x int, y int) []point.Point {
 	result := make([]point.Point, 0)
 	left, left_valid := get_left_coordinate(x, y)
