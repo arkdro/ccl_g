@@ -233,3 +233,45 @@ func Test_get_upper_right_point5(t *testing.T) {
 	}
 }
 
+func Test_same_color_neigbours1(t *testing.T) {
+	color := 3
+	x := 0
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	actual := same_color_neigbours(width, color, x, y, &data)
+	expected := point.Point{0, 0}
+	if len(actual) != 1 || actual[0] != expected {
+		t.Error("same_color_neigbours 1 mismatch")
+	}
+}
+
+func Test_same_color_neigbours2(t *testing.T) {
+	color := 3
+	x := 1
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	actual := same_color_neigbours(width, color, x, y, &data)
+	t.Log(actual)
+	expected1 := point.Point{0, 0}
+	expected2 := point.Point{1, 0}
+	expected0 := point.Point{0, 1}
+	if len(actual) != 3 ||
+		actual[0] != expected0 ||
+		actual[1] != expected1 ||
+		actual[2] != expected2 {
+		t.Error("same_color_neigbours 2 mismatch")
+	}
+}
+
