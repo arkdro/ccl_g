@@ -75,3 +75,71 @@ func Test_get_left_point4(t *testing.T) {
 	}
 }
 
+func Test_get_upper_left_point1(t *testing.T) {
+	color := color.Color(4)
+	x := 1
+	y := 0
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	_, status := get_upper_left_point(color, x, y, &data)
+	expected := false
+	if status != expected {
+		t.Error("get_upper_left_point 1 mismatch")
+	}
+}
+
+func Test_get_upper_left_point2(t *testing.T) {
+	color := color.Color(4)
+	x := 0
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	_, status := get_upper_left_point(color, x, y, &data)
+	expected := false
+	if status != expected {
+		t.Error("get_upper_left_point 2 mismatch")
+	}
+}
+
+func Test_get_upper_left_point3(t *testing.T) {
+	color := color.Color(4)
+	x := 1
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	pt, status := get_upper_left_point(color, x, y, &data)
+	expected := point.Point{0, 0}
+	if status != true && pt != expected {
+		t.Error("get_upper_left_point 3 mismatch")
+	}
+}
+
+func Test_get_upper_left_point4(t *testing.T) {
+	color := color.Color(4)
+	x := 1
+	y := 2
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	pt, status := get_upper_left_point(color, x, y, &data)
+	expected := point.Point{1, 1}
+	if status != true && pt != expected {
+		t.Error("get_upper_left_point 4 mismatch")
+	}
+}
+
