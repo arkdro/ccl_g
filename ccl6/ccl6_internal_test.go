@@ -143,3 +143,93 @@ func Test_get_upper_left_point4(t *testing.T) {
 	}
 }
 
+func Test_get_upper_right_point1(t *testing.T) {
+	color := color.Color(4)
+	x := 1
+	y := 0
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	_, status := get_upper_right_point(width, color, x, y, &data)
+	expected := false
+	if status != expected {
+		t.Error("get_upper_right_point 1 mismatch")
+	}
+}
+
+func Test_get_upper_right_point2(t *testing.T) {
+	color := color.Color(4)
+	x := 1
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	pt, status := get_upper_right_point(width, color, x, y, &data)
+	expected := point.Point{1, 1}
+	if status != true && pt != expected {
+		t.Error("get_upper_right_point 2 mismatch")
+	}
+}
+
+func Test_get_upper_right_point3(t *testing.T) {
+	color := color.Color(3)
+	x := 1
+	y := 2
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	pt, status := get_upper_right_point(width, color, x, y, &data)
+	expected := point.Point{2, 2}
+	if status != true && pt != expected {
+		t.Error("get_upper_right_point 3 mismatch")
+	}
+}
+
+func Test_get_upper_right_point4(t *testing.T) {
+	color := color.Color(3)
+	x := 2
+	y := 2
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	_, status := get_upper_right_point(width, color, x, y, &data)
+	expected := false
+	if status != expected {
+		t.Error("get_upper_right_point 4 mismatch")
+	}
+}
+
+func Test_get_upper_right_point5(t *testing.T) {
+	color := color.Color(3)
+	x := 2
+	y := 1
+	data := [][]int{
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+		{1, 2, 3},
+	}
+	width := 3
+	pt, status := get_upper_right_point(width, color, x, y, &data)
+	expected := point.Point{2, 0}
+	if status != true && pt != expected {
+		t.Error("get_upper_right_point 5 mismatch")
+	}
+}
+
