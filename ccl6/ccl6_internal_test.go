@@ -36,7 +36,7 @@ func Test_get_left_point2(t *testing.T) {
 	}
 	actual, status := get_left_point(color, x, y, &data)
 	expected := point.Point{0, 2}
-	if status != true && actual != expected {
+	if status != true || actual != expected {
 		t.Error("get_left_point 2 mismatch")
 	}
 }
@@ -121,7 +121,7 @@ func Test_get_upper_left_point3(t *testing.T) {
 	}
 	pt, status := get_upper_left_point(color, x, y, &data)
 	expected := point.Point{0, 0}
-	if status != true && pt != expected {
+	if status != true || pt != expected {
 		t.Error("get_upper_left_point 3 mismatch")
 	}
 }
@@ -138,7 +138,7 @@ func Test_get_upper_left_point4(t *testing.T) {
 	}
 	pt, status := get_upper_left_point(color, x, y, &data)
 	expected := point.Point{1, 1}
-	if status != true && pt != expected {
+	if status != true || pt != expected {
 		t.Error("get_upper_left_point 4 mismatch")
 	}
 }
@@ -173,8 +173,8 @@ func Test_get_upper_right_point2(t *testing.T) {
 	}
 	width := 3
 	pt, status := get_upper_right_point(width, color, x, y, &data)
-	expected := point.Point{1, 1}
-	if status != true && pt != expected {
+	expected := point.Point{1, 0}
+	if status != true || pt != expected {
 		t.Error("get_upper_right_point 2 mismatch")
 	}
 }
@@ -191,8 +191,8 @@ func Test_get_upper_right_point3(t *testing.T) {
 	}
 	width := 3
 	pt, status := get_upper_right_point(width, color, x, y, &data)
-	expected := point.Point{2, 2}
-	if status != true && pt != expected {
+	expected := point.Point{2, 1}
+	if status != true || pt != expected {
 		t.Error("get_upper_right_point 3 mismatch")
 	}
 }
@@ -228,7 +228,7 @@ func Test_get_upper_right_point5(t *testing.T) {
 	width := 3
 	pt, status := get_upper_right_point(width, color, x, y, &data)
 	expected := point.Point{2, 0}
-	if status != true && pt != expected {
+	if status != true || pt != expected {
 		t.Error("get_upper_right_point 5 mismatch")
 	}
 }
