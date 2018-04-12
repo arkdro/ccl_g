@@ -43,7 +43,7 @@ func Test_get_left_point2(t *testing.T) {
 
 func Test_get_left_point3(t *testing.T) {
 	color := color.Color(1)
-	x := 0
+	x := 1
 	y := -1
 	data := [][]int{
 		{1, 2, 3},
