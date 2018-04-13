@@ -263,3 +263,25 @@ func Test_fetch_minimal_label(t *testing.T) {
 	}
 }
 
+func Test_fetch_minimal_label2(t *testing.T) {
+	label1 := 1
+	label2 := 4
+	labels := [][]int{
+		{0, 1, 1},
+		{2, 1, 0},
+		{2, 1, 1},
+		}
+	linked := make(map[int]map[int]bool)
+	set1 := init_label_set(label1)
+	set2 := init_label_set(label2)
+	set1[label2] = true
+	linked[label1] = set1
+	linked[label2] = set2
+	x := 2
+	y := 1
+	_, status := fetch_minimal_label(x, y, &labels, &linked)
+	if status != false {
+		t.Error("fetch_minimal_label, 2, status mismatch")
+	}
+}
+
