@@ -396,3 +396,31 @@ func Test_ccl_pass2_1(t *testing.T) {
 	}
 }
 
+func Test_ccl_one_color1(t *testing.T) {
+	width := 8
+	height := 7
+	color := 1
+	data := [][]int{
+		{ 0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{ 0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{ 0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{ 0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	expected_labels := [][]int{
+		{ 0, 1, 1, 1, 1, 1, 0, 0},
+		{0, 1, 1, 0, 0, 1, 1, 0},
+		{ 0, 1, 1, 0, 0, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 1, 0},
+		{ 0, 1, 1, 1, 1, 1, 1, 0},
+		{0, 1, 1, 1, 1, 1, 0, 0},
+		{ 0, 0, 0, 0, 0, 0, 0, 0},
+	}
+	labels := ccl_one_color(width, height, color, &data)
+	if !reflect.DeepEqual(*labels, expected_labels) {
+		t.Error("ccl_one_color 1 labels mismatch")
+	}
+}
+
