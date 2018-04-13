@@ -4,7 +4,7 @@ import (
 	"github.com/asdf/ccl_g/point"
 //	"github.com/asdf/ccl_g/color"
 
-//	"reflect"
+	"reflect"
 	"testing"
 )
 
@@ -285,3 +285,72 @@ func Test_fetch_minimal_label2(t *testing.T) {
 	}
 }
 
+func Test_ccl_pass1_1(t *testing.T) {
+	width := 3
+	height := 3
+	color := 1
+	data := [][]int{
+		{1, 2, 1},
+		{4, 1, 3},
+		{1, 2, 1},
+	}
+	labels := create_empty_labels(width, height)
+	linked := make(map[int]map[int]bool)
+	expected_labels := [][]int{
+		{1, 0, 2},
+		{0, 1, 0},
+		{1, 0, 3},
+	}
+	expected_linked := make(map[int]map[int]bool)
+	set1 := make(map[int]bool)
+	set1[1] = true
+	set2 := make(map[int]bool)
+	set2[2] = true
+	set3 := make(map[int]bool)
+	set3[3] = true
+	expected_linked[1] = set1
+	expected_linked[2] = set2
+	expected_linked[3] = set3
+	ccl_pass1(width, height, color, &data, &labels, &linked)
+	if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("ccl_pass1, 1, labels mismatch")
+	}
+}
+
+func Test_ccl_pass1_2(t *testing.T) {
+	width := 3
+	height := 3
+	color := 1
+	data := [][]int{
+		{1, 2, 1},
+		{4, 1, 1},
+		{1, 2, 1},
+	}
+	labels := create_empty_labels(width, height)
+	linked := make(map[int]map[int]bool)
+	expected_labels := [][]int{
+		{1, 0, 2},
+		{0, 1, 1},
+		{1, 0, 1},
+	}
+	expected_linked := make(map[int]map[int]bool)
+	set1 := make(map[int]bool)
+	set1[1] = true
+	set1[2] = true
+	set1[3] = true
+	set2 := make(map[int]bool)
+	set2[1] = true
+	set2[2] = true
+	set2[3] = true
+	set3 := make(map[int]bool)
+	set3[1] = true
+	set3[2] = true
+	set3[3] = true
+	expected_linked[1] = set1
+	expected_linked[2] = set2
+	expected_linked[3] = set3
+	ccl_pass1(width, height, color, &data, &labels, &linked)
+	if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("ccl_pass1, 2, labels mismatch")
+	}
+}
