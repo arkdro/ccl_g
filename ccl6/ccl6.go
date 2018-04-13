@@ -1,7 +1,6 @@
 package ccl6
 
 import (
-//	"github.com/asdf/ccl_g/color"
 	"github.com/asdf/ccl_g/point"
 )
 
@@ -146,10 +145,6 @@ func is_even(n int) bool {
 
 func no_neigbours(neigbours []point.Point) bool {
 	return len(neigbours) == 0
-}
-
-func init_empty_label_set() map[int]bool {
-	return make(map[int]bool)
 }
 
 func init_label_set(label int) map[int]bool {
