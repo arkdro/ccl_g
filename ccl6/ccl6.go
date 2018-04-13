@@ -19,15 +19,13 @@ func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 
 func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
-	linked := make([]map[int]bool, (width + height)/2)
-	// add dummy item, because labels start from 1
-	linked = append(linked, init_empty_label_set())
+	linked := make(map[int]map[int]bool, (width + height)/2)
 	ccl_pass1(width, height, color, data, &labels, &linked)
 	ccl_pass2(width, height, color, data, &labels, &linked)
 	return &labels
 }
 
-func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int, linked *[]map[int]bool) {
+func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int, linked *map[int]map[int]bool) {
 	label := 1
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
@@ -37,7 +35,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 			neigbours := same_color_neigbours(width, color, x, y, data)
 			if no_neigbours(neigbours) {
 				fresh_label_set := init_label_set(label)
-				*linked = append(*linked, fresh_label_set)
+				(*linked)[label] = fresh_label_set
 				(*labels)[y][x] = label
 				label++
 			} else {
@@ -50,7 +48,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 	}
 }
 
-func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int, linked *[]map[int]bool) {
+func ccl_pass2(width int, height int, color int, data *[][]int, labels *[][]int, linked *map[int]map[int]bool) {
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
 			if is_background(color, x, y, data) {
@@ -179,7 +177,7 @@ func find_minimal_label(labels []int) int {
 	return min
 }
 
-func set_equivalence(labels []int, linked *[]map[int]bool) {
+func set_equivalence(labels []int, linked *map[int]map[int]bool) {
 	for _, label := range labels {
 		existing := (*linked)[label]
 		add_labels_to_set(labels, existing)
@@ -192,7 +190,7 @@ func add_labels_to_set(labels []int, equiv_set map[int]bool) {
 	}
 }
 
-func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]map[int]bool) (int, bool) {
+func fetch_minimal_label(x int, y int, labels *[][]int, linked *map[int]map[int]bool) (int, bool) {
 	label := (*labels)[y][x]
 	if label == 0 {
 		return 0, false
