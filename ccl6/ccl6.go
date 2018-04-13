@@ -216,27 +216,6 @@ func is_background(color int, x int, y int, data *[][]int) bool {
 	}
 }
 
-func has_no_label(x int, y int, labels *[][]int) bool {
-	return !has_label(x, y, labels)
-}
-
-func has_label(x int, y int, labels *[][]int) bool {
-	if (*labels)[y][x] == 0 {
-		return false
-	} else {
-		return true
-	}
-}
-
-func copy_left_label(x int, y int, labels *[][]int) {
-	left_label := get_left_label(x, y, labels)
-	(*labels)[y][x] = left_label
-}
-
-func get_left_label(x int, y int, labels *[][]int) int {
-	return (*labels)[y][x-1]
-}
-
 func create_empty_labels(width int, height int) [][]int {
 	labels := make([][]int, height)
 	for y := 0; y < height; y++ {
