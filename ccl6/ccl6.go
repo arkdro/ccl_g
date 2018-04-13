@@ -4,8 +4,6 @@ import (
 	"github.com/asdf/ccl_g/point"
 )
 
-const connectivity = 8
-
 func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 	labels := make([]*[][]int, color_range)
 	for color := 0; color < color_range; color++ {
