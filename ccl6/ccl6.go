@@ -1,6 +1,8 @@
 package ccl6
 
 import (
+	"github.com/romana/rlog"
+
 	"github.com/asdf/ccl_g/point"
 )
 
@@ -18,7 +20,10 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
 	linked := make(map[int]map[int]bool, (width + height)/2)
 	ccl_pass1(width, height, color, data, &labels, &linked)
+	rlog.Debugf("ccl_one_color, after pass1, labels: %v\nlinked: %v",
+		labels, linked)
 	ccl_pass2(width, height, color, data, &labels, &linked)
+	rlog.Debugf("ccl_one_color, after pass2, labels: %v", labels)
 	return &labels
 }
 
