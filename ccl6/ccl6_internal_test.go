@@ -191,7 +191,7 @@ func Test_no_neigbours2(t *testing.T) {
 }
 
 func Test_find_minimal_label(t *testing.T) {
-	actual := find_minimal_label([]int{10, 5, 2, 2, 1, 3})
+	actual := find_minimal_item([]int{10, 5, 2, 2, 1, 3})
 	expected := 1
 	if actual != expected {
 		t.Error("find_minimal_label mismatch")
