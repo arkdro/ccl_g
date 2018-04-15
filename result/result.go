@@ -1,6 +1,8 @@
 package result
 
 import (
+	"github.com/romana/rlog"
+
 	"log"
 )
 
@@ -98,6 +100,7 @@ func one_color_result_equal(r1 One_color_result, r2 One_color_result) bool {
 }
 
 func (r1 One_color_result) map_labels(r2 One_color_result) (map[Label]Label, bool, Label_error) {
+	rlog.Debug("map_labels,\nr1: %v\nr2: %v", r1, r2)
 	label_map := prepare_label_map()
 	for y, row := range r1 {
 		for x, label1 := range row {
