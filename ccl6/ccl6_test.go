@@ -69,3 +69,29 @@ func Test_ccl2(t *testing.T) {
 		t.Error("ccl 2, labels 0: ", labels[0])
 	}
 }
+
+func Test_ccl3(t *testing.T) {
+	width := 5
+	height := 4
+	color_range := 1
+	data := [][]int{
+		{ 7,7,7,7,0},
+		{0,7,0,0,0},
+		{ 0,0,0,7,7},
+		{0,0,0,0,7},
+	}
+	expected_labels0 := [][]int{
+		{0,0,0,0,1},
+		{1,0,1,1,1},
+		{1,1,1,0,0},
+		{1,1,1,1,0},
+	}
+	expected_labels := []*[][]int{
+		&expected_labels0,
+	}
+	labels := Ccl(width, height, color_range, &data)
+	if !reflect.DeepEqual(labels, expected_labels) {
+		t.Error("ccl 3, labels mismatch")
+		t.Error("ccl 3, labels 0: ", labels[0])
+	}
+}
