@@ -44,7 +44,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 				label++
 			} else {
 				neigbour_labels := find_neigbour_labels(neigbours, labels)
-				min_label := find_minimal_label(neigbour_labels)
+				min_label := find_minimal_item(neigbour_labels)
 				(*labels)[y][x] = min_label
 				set_equivalence(neigbour_labels, linked)
 				rlog.Debugf("ccl_pass1, after set_equivalence\nlinked: %v",
@@ -169,7 +169,7 @@ func find_neigbour_labels(neigbours []point.Point, labels *[][]int) []int {
 	return result
 }
 
-func find_minimal_label(labels []int) int {
+func find_minimal_item(labels []int) int {
 	min := labels[0]
 	for _, x := range labels {
 		if x < min {
@@ -207,7 +207,7 @@ func fetch_minimal_label_by_label(label int, labels *[][]int, linked *map[int]ma
 	for key := range equiv_set {
 		keys = append(keys, key)
 	}
-	min_label := find_minimal_label(keys)
+	min_label := find_minimal_item(keys)
 	if label != min_label {
 		result := fetch_minimal_label_by_label(min_label, labels, linked)
 		equiv_set[result] = true
