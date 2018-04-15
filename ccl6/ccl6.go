@@ -23,7 +23,8 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	rlog.Debugf("ccl_one_color, after pass1, labels: %v\nlinked: %v",
 		labels, linked)
 	ccl_pass2(width, height, color, data, &labels, &linked)
-	rlog.Debugf("ccl_one_color, after pass2, labels: %v", labels)
+	rlog.Debugf("ccl_one_color, after pass2, labels: %v\nlinked: %v",
+		labels, linked)
 	return &labels
 }
 
@@ -34,6 +35,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 			if is_background(color, x, y, data) {
 				continue
 			}
+			rlog.Debugf("ccl_pass1, x: %v, y: %v", x, y)
 			neigbours := same_color_neigbours(width, color, x, y, data)
 			if no_neigbours(neigbours) {
 				fresh_label_set := init_label_set(label)
@@ -45,6 +47,8 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 				min_label := find_minimal_label(neigbour_labels)
 				(*labels)[y][x] = min_label
 				set_equivalence(neigbour_labels, linked)
+				rlog.Debugf("ccl_pass1, after set_equivalence\nlinked: %v",
+					linked)
 			}
 		}
 	}
