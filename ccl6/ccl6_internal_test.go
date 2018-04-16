@@ -2,7 +2,7 @@ package ccl6
 
 import (
 	"github.com/asdf/ccl_g/point"
-	"github.com/asdf/ccl_g/dset"
+//	"github.com/asdf/ccl_g/dset"
 
 	"reflect"
 	"testing"
@@ -371,11 +371,12 @@ func Test_ccl_pass2_1(t *testing.T) {
 		{1, 0, 1},
 	}
 	linked := create_linked_storage(width, height)
-	set1 := dset.Create(1)
-	set2 := dset.Create(2)
-	dset.Union(set1, set2)
-	(*linked)[1] = set1
-	(*linked)[2] = set2
+	label1 := 1
+	label2 := 2
+	(*linked)[label1] = init_label_set(label1)
+	(*linked)[label2] = init_label_set(label2)
+	temp_labels := []int{1, 2}
+	set_equivalence(temp_labels, linked)
 	expected_labels := [][]int{
 		{1, 0, 1},
 		{0, 1, 1},
