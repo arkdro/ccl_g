@@ -3,6 +3,7 @@ package ccl6
 import (
 	"github.com/romana/rlog"
 
+	"github.com/asdf/ccl_g/dset"
 	"github.com/asdf/ccl_g/point"
 )
 
@@ -18,8 +19,8 @@ func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 
 func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
-	linked := make(map[int]map[int]bool, (width + height)/2)
 	ccl_pass1(width, height, color, data, &labels, &linked)
+	linked := create_linked_storage(width, height)
 	rlog.Debugf("ccl_one_color, after pass1, labels: %v\nlinked: %v",
 		labels, linked)
 	ccl_pass2(width, height, color, data, &labels, &linked)
@@ -247,6 +248,11 @@ func create_empty_labels(width int, height int) [][]int {
 		labels[y] = row
 	}
 	return labels
+}
+
+func create_linked_storage(width int, height int) *[]*dset.Dset {
+	res := make([]*dset.Dset, width * height)
+	return &res
 }
 
 func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
