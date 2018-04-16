@@ -203,30 +203,15 @@ func calc_union_of_labels(labels []int) *dset.Dset {
 	return initial
 }
 
-func fetch_minimal_label(x int, y int, labels *[][]int, linked *map[int]map[int]bool) (int, bool) {
+func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]*dset.Dset) (int, bool) {
 	label := (*labels)[y][x]
 	if label == 0 {
 		return 0, false
 	}
-	min_label := fetch_minimal_label_by_label(label, labels, linked)
-	return min_label, true
-}
-
-func fetch_minimal_label_by_label(label int, labels *[][]int, linked *map[int]map[int]bool) int {
+	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v" +
+		"\nlinked: %v", x, y, label, linked)
 	equiv_set := (*linked)[label]
-	keys := make([]int, 0)
-	for key := range equiv_set {
-		keys = append(keys, key)
-	}
-	min_label := find_minimal_item(keys)
-	if label != min_label {
-		result := fetch_minimal_label_by_label(min_label, labels, linked)
-		equiv_set[result] = true
-		(*linked)[label] = equiv_set
-		return result
-	} else {
-		return min_label
-	}
+	return equiv_set.Val, true
 }
 
 func is_foreground(color int, x int, y int, data *[][]int) bool {
