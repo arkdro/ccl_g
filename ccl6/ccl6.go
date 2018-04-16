@@ -5,6 +5,8 @@ import (
 
 	"github.com/asdf/ccl_g/dset"
 	"github.com/asdf/ccl_g/point"
+
+	"fmt"
 )
 
 func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
@@ -22,10 +24,10 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	linked := create_linked_storage(width, height)
 	ccl_pass1(width, height, color, data, &labels, linked)
 	rlog.Debugf("ccl_one_color, after pass1, labels: %v\nlinked: %v",
-		labels, linked)
+		labels, linked_as_string(linked))
 	ccl_pass2(width, height, color, data, &labels, linked)
 	rlog.Debugf("ccl_one_color, after pass2, labels: %v\nlinked: %v",
-		labels, linked)
+		labels, linked_as_string(linked))
 	return &labels
 }
 
@@ -208,9 +210,9 @@ func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]*dset.Dset) (i
 	if label == 0 {
 		return 0, false
 	}
-	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v" +
-		"\nlinked: %v", x, y, label, linked)
 	equiv_set := (*linked)[label]
+	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v, val: %v",
+		x, y, label, equiv_set.Val)
 	return equiv_set.Val, true
 }
 
@@ -252,4 +254,14 @@ func prepare_data(width int, height int, orig_data *[][]int) *[][]int {
 		}
 	}
 	return &data
+}
+
+func linked_as_string(linked *[]*dset.Dset) string {
+	str := ""
+	for idx, item := range *linked {
+		if item != nil {
+			str += fmt.Sprintf("%v: %v, ", idx, (*item).Val)
+		}
+	}
+	return str
 }
