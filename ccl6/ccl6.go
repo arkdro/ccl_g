@@ -180,27 +180,29 @@ func find_minimal_item(labels []int) int {
 	return min
 }
 
-// FIXME optimize performance: move it to pass2
-func set_equivalence(labels []int, linked *map[int]map[int]bool) {
-	max_union := calc_max_union(labels, linked)
+func set_equivalence(labels []int, linked *[]*dset.Dset) {
+	union := calc_max_union(labels, linked)
 	for _, label := range labels {
-		(*linked)[label] = max_union
+		(*linked)[label] = union
 	}
 }
 
-func calc_max_union(labels []int, linked *map[int]map[int]bool) map[int]bool {
-	union := make(map[int]bool)
+func calc_max_union(labels []int, linked *[]*dset.Dset) *dset.Dset {
+	union := calc_union_of_labels(labels)
 	for _, label := range labels {
 		cur_set := (*linked)[label]
-		add_labels_to_union(cur_set, union)
+		dset.Union(cur_set, union)
 	}
 	return union
 }
 
-func add_labels_to_union(cur_set map[int]bool, union map[int]bool) {
-	for label := range cur_set {
-		union[label] = true
+func calc_union_of_labels(labels []int) *dset.Dset {
+	initial := dset.Create(labels[0])
+	for _, label := range labels {
+		item := dset.Create(label)
+		dset.Union(initial, item)
 	}
+	return initial
 }
 
 func fetch_minimal_label(x int, y int, labels *[][]int, linked *map[int]map[int]bool) (int, bool) {
