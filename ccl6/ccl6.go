@@ -19,8 +19,8 @@ func Ccl(width int, height int, color_range int, data *[][]int) []*[][]int {
 
 func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	labels := create_empty_labels(width, height)
-	ccl_pass1(width, height, color, data, &labels, &linked)
 	linked := create_linked_storage(width, height)
+	ccl_pass1(width, height, color, data, &labels, linked)
 	rlog.Debugf("ccl_one_color, after pass1, labels: %v\nlinked: %v",
 		labels, linked)
 	ccl_pass2(width, height, color, data, &labels, &linked)
@@ -29,7 +29,7 @@ func ccl_one_color(width int, height int, color int, data *[][]int) *[][]int {
 	return &labels
 }
 
-func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int, linked *map[int]map[int]bool) {
+func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int, linked *[]*dset.Dset) {
 	label := 1
 	for y := 0; y < height; y++ {
 		for x := 0; x < width; x++ {
