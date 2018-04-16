@@ -155,10 +155,8 @@ func no_neigbours(neigbours []point.Point) bool {
 	return len(neigbours) == 0
 }
 
-func init_label_set(label int) map[int]bool {
-	res := make(map[int]bool)
-	res[label] = true
-	return res
+func init_label_set(label int) *dset.Dset {
+	return dset.Create(label)
 }
 
 func find_neigbour_labels(neigbours []point.Point, labels *[][]int) []int {
