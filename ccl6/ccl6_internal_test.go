@@ -219,21 +219,20 @@ func Test_set_equivalence(t *testing.T) {
 	label1 := 1
 	label2 := 2
 	labels := []int{label1, label2}
-	linked := make(map[int]map[int]bool)
+	width := 3
+	height := 3
+	linked := create_linked_storage(width, height)
 	set1 := init_label_set(label1)
 	set2 := init_label_set(label2)
-	linked[label1] = set1
-	linked[label2] = set2
-	set_equivalence(labels, &linked)
-	if len(linked) != 2 {
-		t.Error("set_equivalence linked length mismatch")
-	}
-	set1 = linked[1]
-	if len(set1) != 2 || set1[label1] != true || set1[label2] != true {
+	(*linked)[label1] = set1
+	(*linked)[label2] = set2
+	set_equivalence(labels, linked)
+	set1 = (*linked)[1]
+	if set1.Val != 1 {
 		t.Error("set_equivalence set1 mismatch")
 	}
-	set2 = linked[2]
-	if len(set2) != 2 || set2[label1] != true || set2[label2] != true {
+	set2 = (*linked)[2]
+	if set2.Val != 1 {
 		t.Error("set_equivalence set2 mismatch")
 	}
 }
