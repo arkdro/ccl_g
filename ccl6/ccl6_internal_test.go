@@ -245,15 +245,16 @@ func Test_fetch_minimal_label(t *testing.T) {
 		{2, 1, 0},
 		{2, 1, 1},
 		}
-	linked := make(map[int]map[int]bool)
+	width := 3
+	height := 3
+	linked := create_linked_storage(width, height)
 	set1 := init_label_set(label1)
 	set2 := init_label_set(label2)
-	set1[label2] = true
-	linked[label1] = set1
-	linked[label2] = set2
+	(*linked)[label1] = set1
+	(*linked)[label2] = set2
 	x := 1
 	y := 1
-	label, status := fetch_minimal_label(x, y, &labels, &linked)
+	label, status := fetch_minimal_label(x, y, &labels, linked)
 	if status != true {
 		t.Error("fetch_minimal_label status mismatch")
 	}
@@ -270,15 +271,16 @@ func Test_fetch_minimal_label2(t *testing.T) {
 		{2, 1, 0},
 		{2, 1, 1},
 		}
-	linked := make(map[int]map[int]bool)
+	width := 3
+	height := 3
+	linked := create_linked_storage(width, height)
 	set1 := init_label_set(label1)
 	set2 := init_label_set(label2)
-	set1[label2] = true
-	linked[label1] = set1
-	linked[label2] = set2
+	(*linked)[label1] = set1
+	(*linked)[label2] = set2
 	x := 2
 	y := 1
-	_, status := fetch_minimal_label(x, y, &labels, &linked)
+	_, status := fetch_minimal_label(x, y, &labels, linked)
 	if status != false {
 		t.Error("fetch_minimal_label, 2, status mismatch")
 	}
@@ -294,7 +296,7 @@ func Test_ccl_pass1_1(t *testing.T) {
 		{1, 2, 1},
 	}
 	labels := create_empty_labels(width, height)
-	linked := make(map[int]map[int]bool)
+	linked := create_linked_storage(width, height)
 	expected_labels := [][]int{
 		{1, 0, 2},
 		{0, 1, 0},
@@ -310,7 +312,7 @@ func Test_ccl_pass1_1(t *testing.T) {
 	expected_linked[1] = set1
 	expected_linked[2] = set2
 	expected_linked[3] = set3
-	ccl_pass1(width, height, color, &data, &labels, &linked)
+	ccl_pass1(width, height, color, &data, &labels, linked)
 	if !reflect.DeepEqual(labels, expected_labels) {
 		t.Error("ccl_pass1, 1, labels mismatch")
 	}
@@ -326,7 +328,7 @@ func Test_ccl_pass1_2(t *testing.T) {
 		{1, 2, 1},
 	}
 	labels := create_empty_labels(width, height)
-	linked := make(map[int]map[int]bool)
+	linked := create_linked_storage(width, height)
 	expected_labels := [][]int{
 		{1, 0, 2},
 		{0, 1, 1},
@@ -348,7 +350,7 @@ func Test_ccl_pass1_2(t *testing.T) {
 	expected_linked[1] = set1
 	expected_linked[2] = set2
 	expected_linked[3] = set3
-	ccl_pass1(width, height, color, &data, &labels, &linked)
+	ccl_pass1(width, height, color, &data, &labels, linked)
 	if !reflect.DeepEqual(labels, expected_labels) {
 		t.Error("ccl_pass1, 2, labels mismatch")
 	}
@@ -368,28 +370,18 @@ func Test_ccl_pass2_1(t *testing.T) {
 		{0, 1, 1},
 		{1, 0, 1},
 	}
-	linked := make(map[int]map[int]bool)
-	set1 := make(map[int]bool)
-	set1[1] = true
-	set1[2] = true
-	set1[3] = true
-	set2 := make(map[int]bool)
-	set2[1] = true
-	set2[2] = true
-	set2[3] = true
-	set3 := make(map[int]bool)
-	set3[1] = true
-	set3[2] = true
-	set3[3] = true
-	linked[1] = set1
-	linked[2] = set2
-	linked[3] = set3
+	linked := create_linked_storage(width, height)
+	set1 := dset.Create(1)
+	set2 := dset.Create(2)
+	dset.Union(set1, set2)
+	(*linked)[1] = set1
+	(*linked)[2] = set2
 	expected_labels := [][]int{
 		{1, 0, 1},
 		{0, 1, 1},
 		{1, 0, 1},
 	}
-	ccl_pass2(width, height, color, &data, &labels, &linked)
+	ccl_pass2(width, height, color, &data, &labels, linked)
 	if !reflect.DeepEqual(labels, expected_labels) {
 		t.Error("ccl_pass2, 1, labels mismatch")
 	}
