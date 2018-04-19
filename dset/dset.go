@@ -7,6 +7,14 @@ type Dset struct {
 	Val int
 }
 
+func min(a, b int) int {
+	if a < b {
+		return a
+	} else {
+		return b
+	}
+}
+
 func Create(x int) *Dset {
 	var item Dset
 	item = Dset{&item, 0, 1, x}
