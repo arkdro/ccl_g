@@ -213,7 +213,7 @@ func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]*dset.Dset) (i
 	equiv_set := (*linked)[label]
 	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v, val: %v",
 		x, y, label, equiv_set.Val)
-	return equiv_set.Val, true
+	return equiv_set.Min, true
 }
 
 func is_foreground(color int, x int, y int, data *[][]int) bool {
