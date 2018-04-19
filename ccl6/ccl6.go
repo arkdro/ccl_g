@@ -190,7 +190,6 @@ func set_equivalence(labels []int, linked *[]*dset.Dset) {
 func calc_max_union(labels []int, linked *[]*dset.Dset) *dset.Dset {
 	base_label := labels[0]
 	base_item := (*linked)[base_label]
-	// union := calc_union_of_labels(labels)
 	for _, label := range labels {
 		cur_set := (*linked)[label]
 		var new_item *dset.Dset
@@ -202,15 +201,6 @@ func calc_max_union(labels []int, linked *[]*dset.Dset) *dset.Dset {
 		dset.Union(new_item, base_item)
 	}
 	return base_item
-}
-
-func calc_union_of_labels(labels []int) *dset.Dset {
-	initial := dset.Create(labels[0])
-	for _, label := range labels {
-		item := dset.Create(label)
-		dset.Union(initial, item)
-	}
-	return initial
 }
 
 func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]*dset.Dset) (int, bool) {
