@@ -51,7 +51,7 @@ func ccl_pass1(width int, height int, color int, data *[][]int, labels *[][]int,
 				(*labels)[y][x] = min_label
 				set_equivalence(neigbour_labels, linked)
 				rlog.Debugf("ccl_pass1, after set_equivalence\nlinked: %v",
-					linked)
+					linked_as_string(linked))
 			}
 		}
 	}
@@ -211,8 +211,8 @@ func fetch_minimal_label(x int, y int, labels *[][]int, linked *[]*dset.Dset) (i
 		return 0, false
 	}
 	equiv_set := (*linked)[label]
-	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v, val: %v",
-		x, y, label, equiv_set.Val)
+	rlog.Debugf("fetch_minimal_label, x: %v, y: %v, label: %v, val: %v, min: %v",
+		x, y, label, equiv_set.Val, equiv_set.Min)
 	return equiv_set.Min, true
 }
 
