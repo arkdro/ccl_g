@@ -135,6 +135,10 @@ func Test_ccl5(t *testing.T) {
 		{7,0,0,7,0,0,0,0},
 	}
 	expected_labels0 := [][]int{
+		{0,0,0,0,0,0,1,1},
+		{0,0,0,0,1,0,1,1},
+		{0,0,1,1,1,0,1,1},
+		{0,1,1,0,1,1,1,1},
 	}
 	expected_labels := []*[][]int{
 		&expected_labels0,
