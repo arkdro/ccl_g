@@ -188,12 +188,20 @@ func set_equivalence(labels []int, linked *[]*dset.Dset) {
 }
 
 func calc_max_union(labels []int, linked *[]*dset.Dset) *dset.Dset {
-	union := calc_union_of_labels(labels)
+	base_label := labels[0]
+	base_item := (*linked)[base_label]
+	// union := calc_union_of_labels(labels)
 	for _, label := range labels {
 		cur_set := (*linked)[label]
-		dset.Union(cur_set, union)
+		var new_item *dset.Dset
+		if cur_set == nil {
+			new_item = dset.Create(label)
+		} else {
+			new_item = cur_set
+		}
+		dset.Union(new_item, base_item)
 	}
-	return union
+	return base_item
 }
 
 func calc_union_of_labels(labels []int) *dset.Dset {
