@@ -108,7 +108,7 @@ func Test_find_and_union_3(t *testing.T) {
 	x := Create(10)
 	y := Create(15)
 	y2 := Create(22)
-	Union(x, y)
+	Union(y, x)
 	Union(y2, y)
 	Union(x, y2)
 	res := x.Find()
@@ -118,8 +118,11 @@ func Test_find_and_union_3(t *testing.T) {
 	if res.Size != 3 {
 		t.Error("find and union, 3, size mismatch")
 	}
-	if res.Val != 10 {
+	if res.Val != 15 {
 		t.Error("find and union, 3, value mismatch")
+	}
+	if res.Min != 10 {
+		t.Error("find and union, 3, min value mismatch")
 	}
 }
 
@@ -150,6 +153,12 @@ func Test_random_1(t *testing.T) {
 		}
 		if odd.Find().Val != x_odd.Find().Val {
 			t.Error("random test, odd item not found", i, odd, x_odd)
+		}
+		if even.Find().Min != 0 {
+			t.Error("random test, even min item wrong", i, even, x_even)
+		}
+		if odd.Find().Min != 1 {
+			t.Error("random test, odd min item wrong", i, odd, x_odd)
 		}
 	}
 }
