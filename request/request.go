@@ -60,9 +60,8 @@ func process_files(files []string, remove bool, connectivity int) {
 		}
 		result := run_request(request, connectivity)
 		if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
-			rlog.Warn("process_files, result mismatch, file:", file,
-				"\nresult:", result,
-				"\nexpected:", request.Expected_data)
+			rlog.Error("process_files, result mismatch, file:", file)
+			rlog.Warn("result:", result, "\nexpected:", request.Expected_data)
 			write_result(file, result)
 		} else {
 			if remove {
