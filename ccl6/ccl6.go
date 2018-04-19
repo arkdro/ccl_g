@@ -260,7 +260,7 @@ func linked_as_string(linked *[]*dset.Dset) string {
 	str := ""
 	for idx, item := range *linked {
 		if item != nil {
-			str += fmt.Sprintf("%v: %v, ", idx, (*item).Val)
+			str += fmt.Sprintf("%v: %v(%v), ", idx, (*item).Val, (*item).Min)
 		}
 	}
 	return str
