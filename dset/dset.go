@@ -2,6 +2,7 @@ package dset
 
 type Dset struct {
 	Parent *Dset
+	Min int
 	Rank int
 	Size int
 	Val int
@@ -17,7 +18,7 @@ func min(a, b int) int {
 
 func Create(x int) *Dset {
 	var item Dset
-	item = Dset{&item, 0, 1, x}
+	item = Dset{&item, x, 0, 1, x}
 	return &item
 }
 
@@ -41,6 +42,11 @@ func Union(x *Dset, y *Dset) {
 	}
 	(*y_root).Parent = x_root
 	(*x_root).Size += (*y_root).Size
+	minimum := min((*x_root).Min, (*y_root).Min)
+	(*x).Min = minimum
+	(*y).Min = minimum
+	(*x_root).Min = minimum
+	(*y_root).Min = minimum
 	if (*x_root).Rank == (*y_root).Rank {
 		(*x_root).Rank++
 	}
