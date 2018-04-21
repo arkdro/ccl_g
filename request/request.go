@@ -4,6 +4,7 @@ import (
 	"github.com/romana/rlog"
 
 	"github.com/asdf/ccl_g/ccl"
+	"github.com/asdf/ccl_g/ccl6"
 	"github.com/asdf/ccl_g/plate"
 	"github.com/asdf/ccl_g/result"
 
@@ -20,7 +21,7 @@ type Request struct {
 	Expected_data result.Result
 }
 
-func Run(file string, dir string, remove bool) {
+func Run(file string, dir string, remove bool, connectivity int) {
 	files := make([]string, 0)
 	if file != "" {
 		files = append(files, file)
@@ -30,7 +31,7 @@ func Run(file string, dir string, remove bool) {
 		log.Printf("No parameters given")
 		return
 	}
-	process_files(files, remove)
+	process_files(files, remove, connectivity)
 }
 
 func get_files_in_dir(dir string) []string {
@@ -48,7 +49,7 @@ func get_files_in_dir(dir string) []string {
 	return names
 }
 
-func process_files(files []string, remove bool) {
+func process_files(files []string, remove bool, connectivity int) {
 	for _, file := range files {
 		rlog.Info("process_files, file:", file)
 		request, err := read_request(file)
@@ -57,11 +58,10 @@ func process_files(files []string, remove bool) {
 				file, err)
 			continue
 		}
-		result := run_request(request)
+		result := run_request(request, connectivity)
 		if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
-			rlog.Warn("process_files, result mismatch, file:", file,
-				"\nresult:", result,
-				"\nexpected:", request.Expected_data)
+			rlog.Error("process_files, result mismatch, file:", file)
+			rlog.Warn("result:", result, "\nexpected:", request.Expected_data)
 			write_result(file, result)
 		} else {
 			if remove {
@@ -111,9 +111,15 @@ func write_result(file string, result result.Result) {
 	ioutil.WriteFile(fname, data, 0644)
 }
 
-func run_request(request Request) result.Result {
-	raw_res := ccl.Ccl(request.Input_data.Width, request.Input_data.Height,
-		request.Input_data.Color_range, &request.Input_data.Data)
+func run_request(request Request, connectivity int) result.Result {
+	var raw_res []*[][]int
+	if connectivity == 6 {
+		raw_res = ccl6.Ccl(request.Input_data.Width, request.Input_data.Height,
+			request.Input_data.Color_range, &request.Input_data.Data)
+	} else {
+		raw_res = ccl.Ccl(request.Input_data.Width, request.Input_data.Height,
+			request.Input_data.Color_range, &request.Input_data.Data)
+	}
 	res := result.Build_result(raw_res)
 	return res
 }

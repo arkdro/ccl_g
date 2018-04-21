@@ -5,6 +5,7 @@
 	--infile - input file. Mutually exclusive with --indir
 	--indir - input dir. Mutually exclusive with --infile
 	--remove - remove input file after successful processing
+	--connectivity - connectivity. 6 or 8 (default)
 
 ## Run
 
