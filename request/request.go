@@ -52,21 +52,25 @@ func get_files_in_dir(dir string) []string {
 func process_files(files []string, remove bool, connectivity int) {
 	for _, file := range files {
 		rlog.Info("process_files, file:", file)
-		request, err := read_request(file)
-		if err != nil {
-			log.Printf("process_files, can't read request for file '%v': %v",
-				file, err)
-			continue
-		}
-		result := run_request(request, connectivity)
-		if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
-			rlog.Error("process_files, result mismatch, file:", file)
-			rlog.Warn("result:", result, "\nexpected:", request.Expected_data)
-			write_result(file, result)
-		} else {
-			if remove {
-				os.Remove(file)
-			}
+		process_one_file(file, remove, connectivity)
+	}
+}
+
+func process_one_file(file string, remove bool, connectivity int) {
+	request, err := read_request(file)
+	if err != nil {
+		log.Printf("process_one_file, can't read request for file '%v': %v",
+			file, err)
+		return
+	}
+	result := run_request(request, connectivity)
+	if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
+		rlog.Error("process_one_file, result mismatch, file:", file)
+		rlog.Warn("result:", result, "\nexpected:", request.Expected_data)
+		write_result(file, result)
+	} else {
+		if remove {
+			os.Remove(file)
 		}
 	}
 }
