@@ -21,7 +21,7 @@ type Request struct {
 	Expected_data result.Result
 }
 
-func Run(file string, dir string, remove bool, connectivity int) {
+func Run(file string, dir string, remove bool, connectivity int, operation string) {
 	files := make([]string, 0)
 	if file != "" {
 		files = append(files, file)
@@ -31,7 +31,7 @@ func Run(file string, dir string, remove bool, connectivity int) {
 		log.Printf("No parameters given")
 		return
 	}
-	process_files(files, remove, connectivity)
+	process_files(files, remove, connectivity, operation)
 }
 
 func get_files_in_dir(dir string) []string {
@@ -49,20 +49,29 @@ func get_files_in_dir(dir string) []string {
 	return names
 }
 
-func process_files(files []string, remove bool, connectivity int) {
+func process_files(files []string, remove bool, connectivity int, operation string) {
 	for _, file := range files {
 		rlog.Info("process_files, file:", file)
-		process_one_file(file, remove, connectivity)
+		process_one_file(file, remove, connectivity, operation)
 	}
 }
 
-func process_one_file(file string, remove bool, connectivity int) {
+func process_one_file(file string, remove bool, connectivity int, operation string) {
 	request, err := read_request(file)
 	if err != nil {
 		log.Printf("process_one_file, can't read request for file '%v': %v",
 			file, err)
 		return
 	}
+	switch operation {
+	case "ccl":
+		process_one_ccl_request(file, request, remove, connectivity)
+	case "graph":
+		process_one_graph_request(file, request, remove, connectivity)
+	}
+}
+
+func process_one_ccl_request(file string, request Request, remove bool, connectivity int) {
 	result := run_request(request, connectivity)
 	if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
 		rlog.Error("process_one_file, result mismatch, file:", file)
@@ -73,6 +82,9 @@ func process_one_file(file string, remove bool, connectivity int) {
 			os.Remove(file)
 		}
 	}
+}
+
+func process_one_graph_request(file string, request Request, remove bool, connectivity int) {
 }
 
 func read_request(file string) (Request, error) {
