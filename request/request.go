@@ -71,20 +71,29 @@ func process_one_file(file string, remove bool, connectivity int, operation stri
 	}
 }
 
-func process_one_ccl_request(file string, request Request, remove bool, connectivity int) {
+func process_one_ccl_request(file string, request Request, remove bool, connectivity int) (result.Result, bool) {
+	var status bool
 	result := run_request(request, connectivity)
 	if !results_equal(result, request.Expected_data, request.Input_data.Color_range) {
+		status = false
 		rlog.Error("process_one_file, result mismatch, file:", file)
 		rlog.Warn("result:", result, "\nexpected:", request.Expected_data)
 		write_result(file, result)
 	} else {
+		status = true
 		if remove {
 			os.Remove(file)
 		}
 	}
+	return result, status
 }
 
 func process_one_graph_request(file string, request Request, remove bool, connectivity int) {
+	ccl_result, ok := process_one_ccl_request(file, request, remove, connectivity)
+	if ok == false {
+		return
+	}
+	result.Merge_ccl_result(request.Input_data.Width, request.Input_data.Height, ccl_result)
 }
 
 func read_request(file string) (Request, error) {
