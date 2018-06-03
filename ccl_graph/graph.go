@@ -82,6 +82,17 @@ func add_cells_to_node(nodes *map[result.Merged_label]*ccl_node, label result.Me
 	rlog.Warnf("nodes2: %+v\n", nodes)
 }
 
+func create_neighbours_in_graph(g *graph.Graph, nodes *map[result.Merged_label]*ccl_node, c_node *ccl_node, neighbour_labels []result.Merged_label) {
+	g_node := (*c_node).node
+	for _, label := range neighbour_labels {
+		current_c_node, found := (*nodes)[label]
+		if found {
+			current_g_node := (*current_c_node).node
+			g.MakeEdge(*g_node, *current_g_node)
+		}
+	}
+}
+
 func Build_graph(width int, height int, merged [][]result.Merged_label, connectivity int) Ccl_graph {
 	g := graph.New(graph.Undirected)
 	nodes := make(map[result.Merged_label]*ccl_node)
