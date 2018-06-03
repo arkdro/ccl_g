@@ -108,11 +108,11 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 			rlog.Warn("x: ", x)
 			node := create_or_fetch_node(g, &nodes, label)
 			rlog.Warnf("node: %+v\n", *node)
-			// neighbour_nodes := get_neighbour_nodes(x, y, merged)
+			neighbour_labels := get_neighbour_labels(x, y, merged)
 			neighbour_cells := get_same_label_neighbour_cells(width, height, connectivity, label, x, y, merged)
 			add_cells_to_node(&nodes, label, neighbour_cells)
 			dump_nodes(&nodes)
-			// add_nodes_to_node(node, neighbour_nodes)
+			create_neighbours_in_graph(g, &nodes, node, neighbour_labels)
 		}
 	}
 	return res
