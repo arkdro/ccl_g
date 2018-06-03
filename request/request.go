@@ -5,6 +5,7 @@ import (
 
 	"github.com/asdf/ccl_g/ccl"
 	"github.com/asdf/ccl_g/ccl6"
+	"github.com/asdf/ccl_g/ccl_graph"
 	"github.com/asdf/ccl_g/plate"
 	"github.com/asdf/ccl_g/result"
 
@@ -19,6 +20,8 @@ import (
 type Request struct {
 	Input_data plate.Plate
 	Expected_data result.Result
+	Expected_merged_ccl_data result.Result
+	Expected_graph result.Result
 }
 
 func Run(file string, dir string, remove bool, connectivity int, operation string) {
@@ -93,7 +96,21 @@ func process_one_graph_request(file string, request Request, remove bool, connec
 	if ok == false {
 		return
 	}
-	result.Merge_ccl_result(request.Input_data.Width, request.Input_data.Height, ccl_result)
+	merged := result.Merge_ccl_result(request.Input_data.Width, request.Input_data.Height, ccl_result)
+	graph := ccl_graph.Build_graph(request.Input_data.Width, request.Input_data.Height, merged, connectivity)
+	check_graph(file, request, remove, graph)
+}
+
+func check_graph(file string, request Request, remove bool, graph ccl_graph.Ccl_graph) {
+	if !ccl_graph.Results_equal(graph, request.Expected_graph) {
+		rlog.Error("graph result mismatch, file:", file)
+		rlog.Warn("result:", graph, "\nexpected:", request.Expected_data)
+		write_graph_result(file, graph)
+	} else {
+		if remove {
+			os.Remove(file)
+		}
+	}
 }
 
 func read_request(file string) (Request, error) {
@@ -134,6 +151,9 @@ func write_result(file string, result result.Result) {
 	}
 	fname := file + "-result"
 	ioutil.WriteFile(fname, data, 0644)
+}
+
+func write_graph_result(file string, graph ccl_graph.Ccl_graph) {
 }
 
 func run_request(request Request, connectivity int) result.Result {
