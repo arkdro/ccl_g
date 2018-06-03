@@ -82,6 +82,11 @@ func add_cells_to_node(nodes *map[result.Merged_label]*ccl_node, label result.Me
 	rlog.Warnf("nodes2: %+v\n", nodes)
 }
 
+func get_neighbour_labels(x int, y int, merged [][]result.Merged_label) []result.Merged_label {
+	result := []result.Merged_label{}
+	return result
+}
+
 func create_neighbours_in_graph(g *graph.Graph, nodes *map[result.Merged_label]*ccl_node, c_node *ccl_node, neighbour_labels []result.Merged_label) {
 	g_node := (*c_node).node
 	for _, label := range neighbour_labels {
