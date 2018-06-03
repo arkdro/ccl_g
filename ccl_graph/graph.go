@@ -82,8 +82,15 @@ func add_cells_to_node(nodes *map[result.Merged_label]*ccl_node, label result.Me
 	rlog.Warnf("nodes2: %+v\n", nodes)
 }
 
-func get_neighbour_labels(x int, y int, merged [][]result.Merged_label) []result.Merged_label {
+func get_neighbour_labels(width int, height int, connectivity int, label result.Merged_label, x int, y int, merged [][]result.Merged_label) []result.Merged_label {
 	result := []result.Merged_label{}
+	coords := coordinates.Get_neighbour_coordinates(connectivity, width, height, x, y)
+	for _, coord := range coords {
+		current_label := merged[coord.Y][coord.X]
+		if label != current_label {
+			result = append(result, current_label)
+		}
+	}
 	return result
 }
 
@@ -108,7 +115,7 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 			rlog.Warn("x: ", x)
 			node := create_or_fetch_node(g, &nodes, label)
 			rlog.Warnf("node: %+v\n", *node)
-			neighbour_labels := get_neighbour_labels(x, y, merged)
+			neighbour_labels := get_neighbour_labels(width, height, connectivity, label, x, y, merged)
 			neighbour_cells := get_same_label_neighbour_cells(width, height, connectivity, label, x, y, merged)
 			add_cells_to_node(&nodes, label, neighbour_cells)
 			dump_nodes(&nodes)
