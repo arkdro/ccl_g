@@ -20,20 +20,22 @@ type ccl_node struct {
 	node *graph.Node
 }
 
-func create_or_fetch_node(g *graph.Graph, nodes *map[result.Merged_label]*ccl_node, label result.Merged_label) *ccl_node {
+func create_or_fetch_node(g *graph.Graph, nodes *map[result.Merged_label]*ccl_node, label result.Merged_label, x int, y int) *ccl_node {
 	c_node, found := (*nodes)[label]
 	if found {
 		return c_node
 	}
 	g_node := add_node_to_graph(g)
 	*g_node.Value = label
-	c_node = add_ccl_node_to_nodes(nodes, g_node, label)
+	c_node = add_ccl_node_to_nodes(nodes, g_node, label, x, y)
 	add_node_to_storage(nodes, c_node, label)
 	return c_node
 }
 
-func add_ccl_node_to_nodes(nodes *map[result.Merged_label]*ccl_node, node *graph.Node, label result.Merged_label) *ccl_node {
+func add_ccl_node_to_nodes(nodes *map[result.Merged_label]*ccl_node, node *graph.Node, label result.Merged_label, x int, y int) *ccl_node {
 	cells := make(map[cell.Ccl_cell]bool)
+	current_cell := cell.Ccl_cell{X: x, Y: y}
+	cells[current_cell] = true
 	cnode := &ccl_node{
 		id: label,
 		node: node,
@@ -113,7 +115,7 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 		rlog.Warn("y: ", y)
 		for x, label := range row {
 			rlog.Warn("x: ", x)
-			node := create_or_fetch_node(g, &nodes, label)
+			node := create_or_fetch_node(g, &nodes, label, x, y)
 			rlog.Warnf("node: %+v\n", *node)
 			neighbour_labels := get_neighbour_labels(width, height, connectivity, label, x, y, merged)
 			neighbour_cells := get_same_label_neighbour_cells(width, height, connectivity, label, x, y, merged)
