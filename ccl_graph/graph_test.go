@@ -16,7 +16,7 @@ func Test_build_graph(t *testing.T) {
 	t.Errorf("merged: %v\n", merged)
 	width := 7
 	height := 4
-	connectivity := 6
+	connectivity := 8
 	graph := Build_graph(width, height, merged, connectivity)
 	expected_cells := make(map[result.Merged_label]cell.Ccl_cell)
 	expected_neighbours := make(map[result.Merged_label]result.Merged_label)
