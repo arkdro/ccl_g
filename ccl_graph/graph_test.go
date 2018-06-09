@@ -74,6 +74,22 @@ func compare_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_l
 	return result
 }
 
+func compare_cells(t *testing.T, g Ccl_graph, expected_cells *map[result.Merged_label]map[cell.Ccl_cell]bool) bool {
+	result := true
+	nodes := g.nodes
+	for label, node := range *nodes {
+		actual_cells := (*node).cells
+		expected_node_cells := (*expected_cells)[label]
+		node_result := compare_node_cells(t, actual_cells, &expected_node_cells)
+		if !node_result {
+			t.Errorf("cells mismatch, label: %+v\nactual: %+v\nexpected: %+v\n",
+				label, *actual_cells, expected_node_cells)
+			result = false
+		}
+	}
+	return result
+}
+
 func compare_node_cells(t *testing.T, actual_cells *map[cell.Ccl_cell]bool, expected_node_cells *map[cell.Ccl_cell]bool) bool {
 	if !reflect.DeepEqual(*actual_cells, *expected_node_cells) {
 		acc := make(map[cell.Ccl_cell]int)
