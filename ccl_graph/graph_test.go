@@ -56,10 +56,10 @@ func Test_build_graph(t *testing.T) {
 			cell.Ccl_cell{X:1, Y:2}: true,
 			cell.Ccl_cell{X:2, Y:2}: true,
 		},
-		result.Make_label(1, 2): map[cell.Ccl_cell]bool{ // ?
+		result.Make_label(1, 2): map[cell.Ccl_cell]bool{
 			cell.Ccl_cell{X:5, Y:2}: true,
 		},
-		result.Make_label(2, 1): map[cell.Ccl_cell]bool{ // ?
+		result.Make_label(2, 1): map[cell.Ccl_cell]bool{
 			cell.Ccl_cell{X:3, Y:0}: true,
 			cell.Ccl_cell{X:4, Y:0}: true,
 			cell.Ccl_cell{X:5, Y:0}: true,
