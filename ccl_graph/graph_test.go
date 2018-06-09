@@ -11,7 +11,7 @@ import (
 	"testing"
 )
 
-func Test_build_graph(t *testing.T) {
+func Test_build_graph_and_compare_labels(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
 	height := 4
