@@ -32,6 +32,52 @@ func Test_build_graph(t *testing.T) {
 	if !result1 {
 		t.Error("compare labels error")
 	}
+	expected_cells := map[result.Merged_label]map[cell.Ccl_cell]bool{
+		result.Make_label(0, 1): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:2, Y:0}: true,
+			cell.Ccl_cell{X:3, Y:1}: true,
+		},
+		result.Make_label(0, 2): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:0, Y:2}: true,
+			cell.Ccl_cell{X:0, Y:3}: true,
+			cell.Ccl_cell{X:1, Y:3}: true,
+			cell.Ccl_cell{X:2, Y:3}: true,
+		},
+		result.Make_label(0, 3): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:6, Y:2}: true,
+			cell.Ccl_cell{X:6, Y:3}: true,
+		},
+		result.Make_label(1, 1): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:0, Y:0}: true,
+			cell.Ccl_cell{X:1, Y:0}: true,
+			cell.Ccl_cell{X:0, Y:1}: true,
+			cell.Ccl_cell{X:1, Y:1}: true,
+			cell.Ccl_cell{X:1, Y:2}: true,
+			cell.Ccl_cell{X:2, Y:2}: true,
+		},
+		result.Make_label(1, 2): map[cell.Ccl_cell]bool{ // ?
+			cell.Ccl_cell{X:5, Y:2}: true,
+		},
+		result.Make_label(2, 1): map[cell.Ccl_cell]bool{ // ?
+			cell.Ccl_cell{X:3, Y:0}: true,
+			cell.Ccl_cell{X:4, Y:0}: true,
+			cell.Ccl_cell{X:5, Y:0}: true,
+			cell.Ccl_cell{X:6, Y:0}: true,
+			cell.Ccl_cell{X:2, Y:1}: true,
+			cell.Ccl_cell{X:4, Y:1}: true,
+			cell.Ccl_cell{X:5, Y:1}: true,
+			cell.Ccl_cell{X:6, Y:1}: true,
+			cell.Ccl_cell{X:3, Y:2}: true,
+			cell.Ccl_cell{X:4, Y:2}: true,
+			cell.Ccl_cell{X:3, Y:3}: true,
+			cell.Ccl_cell{X:4, Y:3}: true,
+			cell.Ccl_cell{X:5, Y:3}: true,
+		},
+	}
+	result_cells := compare_cells(t, graph, &expected_cells)
+	if !result_cells {
+		t.Error("compare cells error")
+	}
 }
 
 func compare_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_label) bool {
