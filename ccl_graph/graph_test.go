@@ -17,9 +17,6 @@ func Test_build_graph_and_compare_labels(t *testing.T) {
 	height := 4
 	connectivity := 8
 	graph := Build_graph(width, height, merged, connectivity)
-	expected_cells := make(map[result.Merged_label]cell.Ccl_cell)
-	expected_neighbours := make(map[result.Merged_label]result.Merged_label)
-	t.Errorf("graph: %v\n", graph)
 	expected_labels := []result.Merged_label{
 		result.Make_label(0, 1),
 		result.Make_label(0, 2),
