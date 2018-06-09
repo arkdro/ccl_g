@@ -13,7 +13,6 @@ import (
 
 func Test_build_graph(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
-	t.Errorf("merged: %v\n", merged)
 	width := 7
 	height := 4
 	connectivity := 8
@@ -33,6 +32,14 @@ func Test_build_graph(t *testing.T) {
 	if !result1 {
 		t.Error("compare labels error")
 	}
+}
+
+func Test_build_graph_and_compare_cells(t *testing.T) {
+	merged := result.Build_merge_ccl_result()
+	width := 7
+	height := 4
+	connectivity := 8
+	graph := Build_graph(width, height, merged, connectivity)
 	expected_cells := map[result.Merged_label]map[cell.Ccl_cell]bool{
 		result.Make_label(0, 1): map[cell.Ccl_cell]bool{
 			cell.Ccl_cell{X:2, Y:0}: true,
