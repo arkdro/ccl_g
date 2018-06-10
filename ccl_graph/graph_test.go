@@ -1,7 +1,7 @@
 package ccl_graph
 
 import (
-//	"github.com/twmb/algoimpl/go/graph"
+	"github.com/twmb/algoimpl/go/graph"
 
 	"github.com/asdf/ccl_g/cell"
 	"github.com/asdf/ccl_g/result"
@@ -213,6 +213,15 @@ func compare_node_cells(t *testing.T, actual_cells *map[cell.Ccl_cell]bool, expe
 
 func compare_neighbours(t *testing.T, g Ccl_graph, expected_neighbours *map[result.Merged_label][]result.Merged_label) bool {
 	return false
+}
+
+func get_actual_labels(t *testing.T, neighbours []graph.Node) []result.Merged_label {
+	labels := []result.Merged_label{}
+	for _, node := range neighbours {
+		label := (*node.Value).(result.Merged_label)
+		labels = append(labels, label)
+	}
+	return labels
 }
 
 func compare_neighbour_labels(t *testing.T, actual_labels []result.Merged_label, expected_labels []result.Merged_label) bool {
