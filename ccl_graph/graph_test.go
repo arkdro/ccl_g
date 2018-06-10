@@ -212,7 +212,21 @@ func compare_node_cells(t *testing.T, actual_cells *map[cell.Ccl_cell]bool, expe
 }
 
 func compare_neighbours(t *testing.T, g Ccl_graph, expected_neighbours *map[result.Merged_label][]result.Merged_label) bool {
-	return false
+	result := true
+	nodes := g.nodes
+	for label, c_node := range *nodes {
+		g_node := c_node.node
+		neighbours := g.g.Neighbors(*g_node)
+		actual_labels := get_actual_labels(t, neighbours)
+		expected_labels := (*expected_neighbours)[label]
+		label_result := compare_neighbour_labels(t, actual_labels, expected_labels)
+		if !label_result {
+			t.Errorf("wrong neighbours, label: %+v\nactual: %+v\nexpected: %+v\n",
+				label, actual_labels, expected_labels)
+			result = false
+		}
+	}
+	return result
 }
 
 func get_actual_labels(t *testing.T, neighbours []graph.Node) []result.Merged_label {
