@@ -106,6 +106,62 @@ func Test_build_graph_and_compare_cells(t *testing.T) {
 	}
 }
 
+func Test_build_graph_and_compare_cells_conn6(t *testing.T) {
+	merged := result.Build_merge_ccl_result_2()
+	width := 7
+	height := 4
+	connectivity := 6
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_cells := map[result.Merged_label]map[cell.Ccl_cell]bool{
+		result.Make_label(0, 1): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:2, Y:0}: true,
+			cell.Ccl_cell{X:3, Y:1}: true,
+		},
+		result.Make_label(0, 2): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:0, Y:2}: true,
+			cell.Ccl_cell{X:0, Y:3}: true,
+			cell.Ccl_cell{X:1, Y:3}: true,
+			cell.Ccl_cell{X:2, Y:3}: true,
+		},
+		result.Make_label(0, 3): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:6, Y:2}: true,
+			cell.Ccl_cell{X:6, Y:3}: true,
+		},
+		result.Make_label(1, 1): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:0, Y:0}: true,
+			cell.Ccl_cell{X:1, Y:0}: true,
+			cell.Ccl_cell{X:0, Y:1}: true,
+			cell.Ccl_cell{X:1, Y:1}: true,
+			cell.Ccl_cell{X:1, Y:2}: true,
+			cell.Ccl_cell{X:2, Y:2}: true,
+		},
+		result.Make_label(1, 2): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:5, Y:2}: true,
+		},
+		result.Make_label(2, 1): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:3, Y:0}: true,
+			cell.Ccl_cell{X:4, Y:0}: true,
+			cell.Ccl_cell{X:5, Y:0}: true,
+			cell.Ccl_cell{X:6, Y:0}: true,
+			cell.Ccl_cell{X:4, Y:1}: true,
+			cell.Ccl_cell{X:5, Y:1}: true,
+			cell.Ccl_cell{X:6, Y:1}: true,
+			cell.Ccl_cell{X:3, Y:2}: true,
+			cell.Ccl_cell{X:4, Y:2}: true,
+			cell.Ccl_cell{X:3, Y:3}: true,
+			cell.Ccl_cell{X:4, Y:3}: true,
+			cell.Ccl_cell{X:5, Y:3}: true,
+		},
+		result.Make_label(2, 2): map[cell.Ccl_cell]bool{
+			cell.Ccl_cell{X:2, Y:1}: true,
+		},
+	}
+	result_cells := compare_cells(t, graph, &expected_cells)
+	if !result_cells {
+		t.Error("compare cells error")
+	}
+}
+
 func Test_build_graph_and_compare_neighbours(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
