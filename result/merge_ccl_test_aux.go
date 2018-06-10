@@ -37,6 +37,39 @@ func Build_merge_ccl_result() [][]Merged_label {
 	return actual
 }
 
+func Build_merge_ccl_result_2() [][]Merged_label {
+	width := 7
+	height := 4
+	data_color_0 := [][]int {
+		{0,0,1,0,0,0,0},
+		{0,0,0,1,0,0,0},
+		{2,0,0,0,0,0,3},
+		{2,2,2,0,0,0,3},
+	}
+	result_color_0 := build_one_color_result(data_color_0)
+	data_color_1 := [][]int {
+		{1,1,0,0,0,0,0},
+		{1,1,0,0,0,0,0},
+		{0,1,1,0,0,2,0},
+		{0,0,0,0,0,0,0},
+	}
+	result_color_1 := build_one_color_result(data_color_1)
+	data_color_2 := [][]int {
+		{0,0,0,1,1,1,1},
+		{0,0,2,0,1,1,1},
+		{0,0,0,1,1,0,0},
+		{0,0,0,1,1,1,0},
+	}
+	result_color_2 := build_one_color_result(data_color_2)
+	result := []One_color_result{
+		result_color_0,
+		result_color_1,
+		result_color_2,
+	}
+	actual := Merge_ccl_result(width, height, result)
+	return actual
+}
+
 func build_one_color_result(data [][]int) One_color_result {
 	result := make([][]Label, 0)
 	for _, row := range data {
