@@ -106,6 +106,7 @@ func Test_build_graph_and_compare_neighbours(t *testing.T) {
 		},
 		result.Make_label(1, 1): []result.Merged_label{
 			result.Make_label(0, 1),
+			result.Make_label(0, 2),
 			result.Make_label(2, 1),
 		},
 		result.Make_label(1, 2): []result.Merged_label{
