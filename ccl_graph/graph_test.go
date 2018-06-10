@@ -214,3 +214,36 @@ func compare_node_cells(t *testing.T, actual_cells *map[cell.Ccl_cell]bool, expe
 func compare_neighbours(t *testing.T, g Ccl_graph, expected_neighbours *map[result.Merged_label][]result.Merged_label) bool {
 	return false
 }
+
+func compare_neighbour_labels(t *testing.T, actual_labels []result.Merged_label, expected_labels []result.Merged_label) bool {
+	res := true
+	if len(actual_labels) != len(expected_labels) {
+		t.Errorf("lengths of actual (%d) and expected labels (%d) differ\n",
+			len(actual_labels), len(expected_labels))
+		res = false
+	}
+	acc := make(map[result.Merged_label]int)
+	for _, label := range actual_labels {
+		_, found := acc[label]
+		if found {
+			acc[label]++
+		} else {
+			acc[label] = 1
+		}
+	}
+	for _, label := range expected_labels {
+		_, found := acc[label]
+		if found {
+			acc[label]--
+		} else {
+			acc[label] = -1
+		}
+	}
+	for label, value := range acc {
+		if value != 0 {
+			t.Errorf("wrong value (%d) for label (%+v)\n", value, label)
+			res = false
+		}
+	}
+	return res
+}
