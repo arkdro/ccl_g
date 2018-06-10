@@ -31,6 +31,27 @@ func Test_build_graph_and_compare_labels(t *testing.T) {
 	}
 }
 
+func Test_build_graph_and_compare_labels_conn6(t *testing.T) {
+	merged := result.Build_merge_ccl_result_2()
+	width := 7
+	height := 4
+	connectivity := 6
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_labels := []result.Merged_label{
+		result.Make_label(0, 1),
+		result.Make_label(0, 2),
+		result.Make_label(0, 3),
+		result.Make_label(1, 1),
+		result.Make_label(1, 2),
+		result.Make_label(2, 1),
+		result.Make_label(2, 2),
+	}
+	result1 := compare_labels(t, graph, expected_labels)
+	if !result1 {
+		t.Error("compare labels error")
+	}
+}
+
 func Test_build_graph_and_compare_cells(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
