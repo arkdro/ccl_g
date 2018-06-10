@@ -204,6 +204,54 @@ func Test_build_graph_and_compare_neighbours(t *testing.T) {
 	}
 }
 
+func Test_build_graph_and_compare_neighbours_conn6(t *testing.T) {
+	merged := result.Build_merge_ccl_result_2()
+	width := 7
+	height := 4
+	connectivity := 6
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_neighbours := map[result.Merged_label][]result.Merged_label{
+		result.Make_label(0, 1): []result.Merged_label{
+			result.Make_label(1, 1),
+			result.Make_label(2, 1),
+			result.Make_label(2, 2),
+		},
+		result.Make_label(0, 2): []result.Merged_label{
+			result.Make_label(1, 1),
+			result.Make_label(2, 1),
+		},
+		result.Make_label(0, 3): []result.Merged_label{
+			result.Make_label(1, 2),
+			result.Make_label(2, 1),
+		},
+		result.Make_label(1, 1): []result.Merged_label{
+			result.Make_label(0, 1),
+			result.Make_label(0, 2),
+			result.Make_label(2, 1),
+			result.Make_label(2, 2),
+		},
+		result.Make_label(1, 2): []result.Merged_label{
+			result.Make_label(0, 3),
+			result.Make_label(2, 1),
+		},
+		result.Make_label(2, 1): []result.Merged_label{
+			result.Make_label(0, 1),
+			result.Make_label(0, 2),
+			result.Make_label(0, 3),
+			result.Make_label(1, 1),
+			result.Make_label(1, 2),
+		},
+		result.Make_label(2, 2): []result.Merged_label{
+			result.Make_label(0, 1),
+			result.Make_label(1, 1),
+		},
+	}
+	result_neighbours := compare_neighbours(t, graph, &expected_neighbours)
+	if !result_neighbours {
+		t.Error("compare neighbors error")
+	}
+}
+
 func compare_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_label) bool {
 	nodes := g.nodes
 	if len(*nodes) != len(expected_labels) {
