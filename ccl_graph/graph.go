@@ -127,7 +127,7 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 	return res
 }
 
-func Results_equal(graph Ccl_graph, expected interface{}) bool {
+func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 	return false
 }
 

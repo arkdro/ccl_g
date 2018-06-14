@@ -20,8 +20,8 @@ import (
 type Request struct {
 	Input_data plate.Plate
 	Expected_data result.Result
-	Expected_merged_ccl_data result.Result
-	Expected_graph result.Result
+	Expected_merged_ccl_data result.G_merged_ccl
+	Expected_graph result.G_result
 }
 
 func Run(file string, dir string, remove bool, connectivity int, operation string) {

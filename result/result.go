@@ -12,6 +12,30 @@ type One_color_result [][]Label
 
 type Result []One_color_result
 
+type G_merged_cell struct {
+	Id G_label
+	X int
+	Y int
+}
+
+type G_merged_ccl_one_color []G_merged_cell
+type G_merged_ccl []G_merged_ccl_one_color
+
+type G_cell struct {
+	X int
+	Y int
+}
+
+type G_label string
+
+type G_item struct {
+	Id G_label
+	Cells []G_cell
+	Neigbours []G_label
+}
+
+type G_result map[G_label]G_item
+
 type Label_error struct {
 	x int
 	y int
