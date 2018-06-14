@@ -136,3 +136,17 @@ func dump_nodes(nodes *map[result.Merged_label]*ccl_node) {
 		rlog.Warnf("label: %+v,\nnode: %+v, %+v, %+v\n", k, v.id, v.cells, v.node)
 	}
 }
+
+func dump_graph(g Ccl_graph) {
+	nodes := g.nodes
+	for _, c_node := range *nodes {
+		cur_label := (*c_node.node.Value).(result.Merged_label)
+		rlog.Warnf("graph, cur label: %+v\n", cur_label)
+		neighbors := g.g.Neighbors(*c_node.node)
+		for _, g_node := range neighbors {
+			label := (*g_node.Value).(result.Merged_label)
+			cells := *c_node.cells
+			rlog.Warnf("label: %+v\ncells: %+v\n", label, cells)
+		}
+	}
+}
