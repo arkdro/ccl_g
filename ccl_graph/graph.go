@@ -128,6 +128,8 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 }
 
 func Results_equal(graph Ccl_graph, expected result.G_result) bool {
+	rlog.Warnf("results equal, graph: %+v\nexpected: %+v\n", graph, expected)
+	dump_graph(graph)
 	return false
 }
 
