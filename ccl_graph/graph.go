@@ -133,6 +133,13 @@ func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 	if !compare_labels(graph, expected) {
 		return false
 	}
+	for exp_key, exp_node := range expected {
+		g_label := result.G_to_merged_label(exp_key)
+		c_node := (*graph.nodes)[g_label]
+		if !compare_cells(c_node, &exp_node) {
+			return false
+		}
+	}
 	return false
 }
 
@@ -167,6 +174,12 @@ func compare_labels(graph Ccl_graph, expected result.G_result) bool {
 		}
 	}
 	return result
+}
+
+func compare_cells(c_node *ccl_node, exp_node *result.G_item) bool {
+	c_cells := c_node.cells
+	exp_g_cells := exp_node.Cells
+	result.Compare_cells(c_cells, &exp_g_cells)
 }
 
 func dump_nodes(nodes *map[result.Merged_label]*ccl_node) {

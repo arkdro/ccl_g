@@ -3,6 +3,8 @@ package result
 import (
 	"github.com/romana/rlog"
 
+	"github.com/asdf/ccl_g/cell"
+
 	"log"
 )
 
@@ -42,6 +44,9 @@ type Label_error struct {
 	key Label
 	val_old Label
 	val_new Label
+}
+
+func Compare_cells(c_cells *map[cell.Ccl_cell]bool, g_cells *[]G_cell) bool {
 }
 
 func Equal(r1 Result, r2 Result, color_range int) bool {
