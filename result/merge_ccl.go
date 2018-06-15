@@ -43,3 +43,7 @@ func Merge_ccl_result(width int, height int, result Result) [][]Merged_label {
 func Make_label(c int, l int) Merged_label {
 	return Merged_label{color.Color(c), Label(l)}
 }
+
+func G_to_merged_label(s G_label) Merged_label {
+	
+}
