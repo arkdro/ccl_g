@@ -130,7 +130,43 @@ func Build_graph(width int, height int, merged [][]result.Merged_label, connecti
 func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 	rlog.Warnf("results equal, graph: %+v\nexpected: %+v\n", graph, expected)
 	dump_graph(graph)
+	if !compare_labels(graph, expected) {
+		return false
+	}
 	return false
+}
+
+func compare_labels(graph Ccl_graph, expected result.G_result) bool {
+	c_labels := make(map[result.Merged_label]bool)
+	for label := range *graph.nodes {
+		c_labels = append(c_labels, label)
+	}
+	g_labels := make(map[result.Merged_label]bool)
+	for label := range expected {
+		g_label := result.G_to_merged_label(label)
+		g_labels = append(g_labels, g_label)
+	}
+	if len(c_labels) != len(g_labels) {
+		rlog.Warnf("graph label lengths mismatch, ccl: %d, json: %d\n",
+			len(c_labels), len(g_labels))
+		return false
+	}
+	result := true
+	for c_label := range c_labels {
+		_, found := g_labels[c_label]
+		if !found {
+			rlog.Warnf("json label missing for ccl label: %+v\n", c_label)
+			result = false
+		}
+	}
+	for g_label := range g_labels {
+		_, found := c_labels[g_label]
+		if !found {
+			rlog.Warnf("ccl label missing for json label: %+v\n", g_label)
+			result = false
+		}
+	}
+	return result
 }
 
 func dump_nodes(nodes *map[result.Merged_label]*ccl_node) {
