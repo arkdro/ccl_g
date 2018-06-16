@@ -46,9 +46,6 @@ type Label_error struct {
 	val_new Label
 }
 
-func Compare_cells(c_cells *map[cell.Ccl_cell]bool, g_cells *[]G_cell) bool {
-}
-
 func Equal(r1 Result, r2 Result, color_range int) bool {
 	for i := 0; i < color_range; i++ {
 		res := one_color_result_equal(r1[i], r2[i])
