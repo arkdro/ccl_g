@@ -134,9 +134,7 @@ func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 		return false
 	}
 	for exp_key, exp_node := range expected {
-		g_label := result.G_to_merged_label(exp_key)
-		c_node := (*graph.nodes)[g_label]
-		if !compare_cells(c_node, &exp_node) {
+		if !compare_cells(graph, exp_key, &exp_node) {
 			return false
 		}
 	}
@@ -176,10 +174,42 @@ func compare_labels(graph Ccl_graph, expected result.G_result) bool {
 	return result
 }
 
-func compare_cells(c_node *ccl_node, exp_node *result.G_item) bool {
-	c_cells := c_node.cells
+func compare_cells(graph Ccl_graph, exp_key result.G_label, exp_node *result.G_item) bool {
+	result_status := true
 	exp_g_cells := exp_node.Cells
-	result.Compare_cells(c_cells, &exp_g_cells)
+	g_cells_uniq := make(map[G_cell]int)
+	for _, g_cell := range *exp_g_cells {
+		c_cell := cell.Ccl_cell{g_cell.X, g_cell.Y}
+		_, found := g_cells_uniq[c_cell]
+		if found {
+			g_cells_uniq[c_cell]++
+		} else {
+			g_cells_uniq[c_cell] = 1
+		}
+	}
+	for g_cell, count := range g_cells_uniq {
+		if count != 1 {
+			result_status = false
+			rlog.Warnf("expected cells duplicated, cell: %+v, cnt: %d\n",
+				g_cell, count)
+		}
+	}
+	g_label := result.G_to_merged_label(exp_key)
+	c_node := (*graph.nodes)[g_label]
+	c_cells := c_node.cells
+	if len(c_cells) != len(g_cells_uniq) {
+		rlog.Warnf("lengths mismatch, ccl: %d, expected: %d\n",
+			len(c_cells), len(g_cells_uniq))
+		return false
+	}
+	for c_cell := range c_cells {
+		_, found := g_cells_uniq[c_cell]
+		if !found {
+			result_status = false
+			rlog.Warnf("ccl cell missing in expected cells: %+v\n", c_cell)
+		}
+	}
+	return result_status
 }
 
 func dump_nodes(nodes *map[result.Merged_label]*ccl_node) {
