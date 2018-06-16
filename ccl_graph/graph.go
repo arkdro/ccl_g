@@ -137,8 +137,11 @@ func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 		if !compare_cells(graph, exp_key, &exp_node) {
 			return false
 		}
+		if !compare_neighbours(graph, exp_key, &exp_node) {
+			return false
+		}
 	}
-	return false
+	return true
 }
 
 func compare_labels(graph Ccl_graph, expected result.G_result) bool {
@@ -207,6 +210,32 @@ func compare_cells(graph Ccl_graph, exp_key result.G_label, exp_node *result.G_i
 		if !found {
 			result_status = false
 			rlog.Warnf("ccl cell missing in expected cells: %+v\n", c_cell)
+		}
+	}
+	return result_status
+}
+
+func compare_neighbours(g Ccl_graph, exp_key result.G_label, exp_node *result.G_item) bool {
+	result_status := false
+	g_label := result.G_to_merged_label(exp_key)
+	c_node := (*g.nodes)[g_label]
+	neighbors := g.g.Neighbors(c_node.node)
+	c_labels := make(map[result.Merged_label]bool)
+	for _, neighbor := range neighbors {
+		label := (*neighbor.Value).(result.Merged_label)
+		c_labels[label] = true
+	}
+	exp_g_labels := exp_node.Neighbors
+	exp_merged_labels := make(map[result.Merged_label]bool)
+	for _, g_label := range exp_g_labels {
+		label := result.G_to_merged_label(g_label)
+		exp_merged_labels[label] = true
+	}
+	for label := range c_labels {
+		_, found := exp_merged_labels[label]
+		if !found {
+			result_status = false
+			rlog.Warnf("ccl label missing in expected neighbors: %+v\n", label)
 		}
 	}
 	return result_status
