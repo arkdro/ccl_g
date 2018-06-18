@@ -25,7 +25,7 @@ func Test_build_graph_and_compare_labels(t *testing.T) {
 		result.Make_label(1, 2),
 		result.Make_label(2, 1),
 	}
-	result1 := compare_labels(t, graph, expected_labels)
+	result1 := compare_test_labels(t, graph, expected_labels)
 	if !result1 {
 		t.Error("compare labels error")
 	}
@@ -46,7 +46,7 @@ func Test_build_graph_and_compare_labels_conn6(t *testing.T) {
 		result.Make_label(2, 1),
 		result.Make_label(2, 2),
 	}
-	result1 := compare_labels(t, graph, expected_labels)
+	result1 := compare_test_labels(t, graph, expected_labels)
 	if !result1 {
 		t.Error("compare labels error")
 	}
@@ -100,7 +100,7 @@ func Test_build_graph_and_compare_cells(t *testing.T) {
 			cell.Ccl_cell{X:5, Y:3}: true,
 		},
 	}
-	result_cells := compare_cells(t, graph, &expected_cells)
+	result_cells := compare_test_cells(t, graph, &expected_cells)
 	if !result_cells {
 		t.Error("compare cells error")
 	}
@@ -156,7 +156,7 @@ func Test_build_graph_and_compare_cells_conn6(t *testing.T) {
 			cell.Ccl_cell{X:2, Y:1}: true,
 		},
 	}
-	result_cells := compare_cells(t, graph, &expected_cells)
+	result_cells := compare_test_cells(t, graph, &expected_cells)
 	if !result_cells {
 		t.Error("compare cells error")
 	}
@@ -198,7 +198,7 @@ func Test_build_graph_and_compare_neighbours(t *testing.T) {
 			result.Make_label(1, 2),
 		},
 	}
-	result_neighbours := compare_neighbours(t, graph, &expected_neighbours)
+	result_neighbours := compare_test_neighbours(t, graph, &expected_neighbours)
 	if !result_neighbours {
 		t.Error("compare neighbors error")
 	}
@@ -246,13 +246,13 @@ func Test_build_graph_and_compare_neighbours_conn6(t *testing.T) {
 			result.Make_label(1, 1),
 		},
 	}
-	result_neighbours := compare_neighbours(t, graph, &expected_neighbours)
+	result_neighbours := compare_test_neighbours(t, graph, &expected_neighbours)
 	if !result_neighbours {
 		t.Error("compare neighbors error")
 	}
 }
 
-func compare_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_label) bool {
+func compare_test_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_label) bool {
 	nodes := g.nodes
 	if len(*nodes) != len(expected_labels) {
 		t.Errorf("lengths of graph (%d) and expected labels array (%d) mismatch\n",
@@ -292,7 +292,7 @@ func compare_labels(t *testing.T, g Ccl_graph, expected_labels []result.Merged_l
 	return result
 }
 
-func compare_cells(t *testing.T, g Ccl_graph, expected_cells *map[result.Merged_label]map[cell.Ccl_cell]bool) bool {
+func compare_test_cells(t *testing.T, g Ccl_graph, expected_cells *map[result.Merged_label]map[cell.Ccl_cell]bool) bool {
 	result := true
 	nodes := g.nodes
 	for label, node := range *nodes {
@@ -337,7 +337,7 @@ func compare_node_cells(t *testing.T, actual_cells *map[cell.Ccl_cell]bool, expe
 	return true
 }
 
-func compare_neighbours(t *testing.T, g Ccl_graph, expected_neighbours *map[result.Merged_label][]result.Merged_label) bool {
+func compare_test_neighbours(t *testing.T, g Ccl_graph, expected_neighbours *map[result.Merged_label][]result.Merged_label) bool {
 	result := true
 	nodes := g.nodes
 	for label, c_node := range *nodes {
