@@ -147,12 +147,12 @@ func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 func compare_labels(graph Ccl_graph, expected result.G_result) bool {
 	c_labels := make(map[result.Merged_label]bool)
 	for label := range *graph.nodes {
-		c_labels = append(c_labels, label)
+		c_labels[label] = true
 	}
 	g_labels := make(map[result.Merged_label]bool)
 	for label := range expected {
 		g_label := result.G_to_merged_label(label)
-		g_labels = append(g_labels, g_label)
+		g_labels[g_label] = true
 	}
 	if len(c_labels) != len(g_labels) {
 		rlog.Warnf("graph label lengths mismatch, ccl: %d, json: %d\n",
@@ -180,8 +180,8 @@ func compare_labels(graph Ccl_graph, expected result.G_result) bool {
 func compare_cells(graph Ccl_graph, exp_key result.G_label, exp_node *result.G_item) bool {
 	result_status := true
 	exp_g_cells := exp_node.Cells
-	g_cells_uniq := make(map[G_cell]int)
-	for _, g_cell := range *exp_g_cells {
+	g_cells_uniq := make(map[cell.Ccl_cell]int)
+	for _, g_cell := range exp_g_cells {
 		c_cell := cell.Ccl_cell{g_cell.X, g_cell.Y}
 		_, found := g_cells_uniq[c_cell]
 		if found {
@@ -200,12 +200,12 @@ func compare_cells(graph Ccl_graph, exp_key result.G_label, exp_node *result.G_i
 	g_label := result.G_to_merged_label(exp_key)
 	c_node := (*graph.nodes)[g_label]
 	c_cells := c_node.cells
-	if len(c_cells) != len(g_cells_uniq) {
+	if len(*c_cells) != len(g_cells_uniq) {
 		rlog.Warnf("lengths mismatch, ccl: %d, expected: %d\n",
-			len(c_cells), len(g_cells_uniq))
+			len(*c_cells), len(g_cells_uniq))
 		return false
 	}
-	for c_cell := range c_cells {
+	for c_cell := range *c_cells {
 		_, found := g_cells_uniq[c_cell]
 		if !found {
 			result_status = false
@@ -219,13 +219,13 @@ func compare_neighbours(g Ccl_graph, exp_key result.G_label, exp_node *result.G_
 	result_status := false
 	g_label := result.G_to_merged_label(exp_key)
 	c_node := (*g.nodes)[g_label]
-	neighbors := g.g.Neighbors(c_node.node)
+	neighbors := g.g.Neighbors(*c_node.node)
 	c_labels := make(map[result.Merged_label]bool)
 	for _, neighbor := range neighbors {
 		label := (*neighbor.Value).(result.Merged_label)
 		c_labels[label] = true
 	}
-	exp_g_labels := exp_node.Neighbors
+	exp_g_labels := exp_node.Neigbours
 	exp_merged_labels := make(map[result.Merged_label]bool)
 	for _, g_label := range exp_g_labels {
 		label := result.G_to_merged_label(g_label)
