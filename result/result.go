@@ -3,8 +3,6 @@ package result
 import (
 	"github.com/romana/rlog"
 
-	"github.com/asdf/ccl_g/cell"
-
 	"log"
 )
 
