@@ -2,6 +2,8 @@ package result
 
 import (
 	"github.com/asdf/ccl_g/color"
+
+	"fmt"
 )
 
 type Merged_label struct {
@@ -45,5 +47,7 @@ func Make_label(c int, l int) Merged_label {
 }
 
 func G_to_merged_label(s G_label) Merged_label {
-	
+	var c, l int
+	fmt.Sscanf(string(s), "%d_%d", &c, &l)
+	return Make_label(c, l)
 }
