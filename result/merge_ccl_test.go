@@ -23,3 +23,21 @@ func Test_merge_ccl(t *testing.T) {
 		}
 	}
 }
+
+func Test_g_to_merged_label(t *testing.T) {
+	actual := G_to_merged_label("2_4")
+	expected := Merged_label{2, 4}
+	if actual != expected {
+		t.Error("merged label mismatch, 1")
+	}
+	actual = G_to_merged_label("02_04")
+	expected = Merged_label{2, 4}
+	if actual != expected {
+		t.Error("merged label mismatch, 2")
+	}
+	actual = G_to_merged_label("202_304")
+	expected = Merged_label{202, 304}
+	if actual != expected {
+		t.Error("merged label mismatch, 3")
+	}
+}
