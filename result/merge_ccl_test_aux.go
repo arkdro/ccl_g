@@ -75,7 +75,7 @@ func Build_expected_g_result_c6() G_result {
 				{2, 0},
 				{3, 1},
 			},
-			[]G_label{"1_1", "2_1"},
+			[]G_label{"1_1", "2_1", "2_2"},
 		},
 		"0_2": {"0_2",
 			[]G_cell{
@@ -102,7 +102,7 @@ func Build_expected_g_result_c6() G_result {
 				{1, 2},
 				{2, 2},
 			},
-			[]G_label{"0_1", "0_2", "2_1"},
+			[]G_label{"0_1", "0_2", "2_1", "2_2"},
 		},
 		"1_2": {"1_2",
 			[]G_cell{
