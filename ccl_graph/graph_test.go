@@ -24,6 +24,19 @@ func Test_results_equal_1(t *testing.T) {
 	}
 }
 
+func Test_results_equal_2(t *testing.T) {
+	merged := result.Build_merge_ccl_result_2()
+	width := 7
+	height := 4
+	connectivity := 6
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_g := result.Build_expected_g_result_c6()
+	result := Results_equal(graph, expected_g)
+	if !result {
+		t.Error("results_equal, conn 6, error")
+	}
+}
+
 func Test_compare_neighbours_1(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
