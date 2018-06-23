@@ -216,7 +216,7 @@ func compare_cells(graph Ccl_graph, exp_key result.G_label, exp_node *result.G_i
 }
 
 func compare_neighbours(g Ccl_graph, exp_key result.G_label, exp_node *result.G_item) bool {
-	result_status := false
+	result_status := true
 	g_label := result.G_to_merged_label(exp_key)
 	c_node := (*g.nodes)[g_label]
 	neighbors := g.g.Neighbors(*c_node.node)
