@@ -11,6 +11,19 @@ import (
 	"testing"
 )
 
+func Test_compare_labels(t *testing.T) {
+	merged := result.Build_merge_ccl_result()
+	width := 7
+	height := 4
+	connectivity := 8
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_g := result.Build_expected_g_result()
+	result := compare_labels(graph, expected_g)
+	if !result {
+		t.Error("compare labels, conn 8, error")
+	}
+}
+
 func Test_build_graph_and_compare_labels(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
