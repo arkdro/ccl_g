@@ -11,6 +11,22 @@ import (
 	"testing"
 )
 
+func Test_compare_neighbours_1(t *testing.T) {
+	merged := result.Build_merge_ccl_result()
+	width := 7
+	height := 4
+	connectivity := 8
+	graph := Build_graph(width, height, merged, connectivity)
+	expected_g := result.Build_expected_g_result_c8()
+	for exp_key, exp_node := range expected_g {
+		result := compare_neighbours(graph, exp_key, &exp_node)
+		if !result {
+			t.Errorf("compare neighbors, conn 8, error. Key: %+v, node: %+v\n",
+				exp_key, exp_node)
+		}
+	}
+}
+
 func Test_compare_cells_1(t *testing.T) {
 	merged := result.Build_merge_ccl_result()
 	width := 7
