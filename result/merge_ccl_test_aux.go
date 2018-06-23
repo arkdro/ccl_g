@@ -4,7 +4,7 @@ import (
 	"github.com/asdf/ccl_g/color"
 )
 
-func Build_expected_g_result() G_result {
+func Build_expected_g_result_c8() G_result {
 	result := map[G_label]G_item{
 		"0_1": {"0_1",
 			[]G_cell{

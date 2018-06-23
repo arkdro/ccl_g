@@ -17,7 +17,7 @@ func Test_compare_labels(t *testing.T) {
 	height := 4
 	connectivity := 8
 	graph := Build_graph(width, height, merged, connectivity)
-	expected_g := result.Build_expected_g_result()
+	expected_g := result.Build_expected_g_result_c8()
 	result := compare_labels(graph, expected_g)
 	if !result {
 		t.Error("compare labels, conn 8, error")
