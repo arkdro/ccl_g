@@ -27,7 +27,7 @@ func Test_build_graph_and_compare_labels(t *testing.T) {
 	}
 	result1 := compare_test_labels(t, graph, expected_labels)
 	if !result1 {
-		t.Error("compare labels error")
+		t.Error("compare test labels, conn 8, error")
 	}
 }
 
@@ -48,7 +48,7 @@ func Test_build_graph_and_compare_labels_conn6(t *testing.T) {
 	}
 	result1 := compare_test_labels(t, graph, expected_labels)
 	if !result1 {
-		t.Error("compare labels error")
+		t.Error("compare test labels, conn 6, error")
 	}
 }
 
@@ -102,7 +102,7 @@ func Test_build_graph_and_compare_cells(t *testing.T) {
 	}
 	result_cells := compare_test_cells(t, graph, &expected_cells)
 	if !result_cells {
-		t.Error("compare cells error")
+		t.Error("compare test cells, conn 8, error")
 	}
 }
 
@@ -158,7 +158,7 @@ func Test_build_graph_and_compare_cells_conn6(t *testing.T) {
 	}
 	result_cells := compare_test_cells(t, graph, &expected_cells)
 	if !result_cells {
-		t.Error("compare cells error")
+		t.Error("compare cells, conn 6, error")
 	}
 }
 
@@ -200,7 +200,7 @@ func Test_build_graph_and_compare_neighbours(t *testing.T) {
 	}
 	result_neighbours := compare_test_neighbours(t, graph, &expected_neighbours)
 	if !result_neighbours {
-		t.Error("compare neighbors error")
+		t.Error("compare test neighbors, conn 8, error")
 	}
 }
 
@@ -248,7 +248,7 @@ func Test_build_graph_and_compare_neighbours_conn6(t *testing.T) {
 	}
 	result_neighbours := compare_test_neighbours(t, graph, &expected_neighbours)
 	if !result_neighbours {
-		t.Error("compare neighbors error")
+		t.Error("compare test neighbors, conn 6, error")
 	}
 }
 
