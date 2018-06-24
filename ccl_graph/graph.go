@@ -131,13 +131,16 @@ func Results_equal(graph Ccl_graph, expected result.G_result) bool {
 	rlog.Warnf("results equal, graph: %+v\nexpected: %+v\n", graph, expected)
 	dump_graph(graph)
 	if !compare_labels(graph, expected) {
+		rlog.Error("graph result labels mismatch")
 		return false
 	}
 	for exp_key, exp_node := range expected {
 		if !compare_cells(graph, exp_key, &exp_node) {
+			rlog.Error("graph result cells mismatch")
 			return false
 		}
 		if !compare_neighbours(graph, exp_key, &exp_node) {
+			rlog.Error("graph result neighbours mismatch")
 			return false
 		}
 	}
